@@ -1,0 +1,11 @@
+{
+  "name": "wappler_desktop_app",
+  "version": "1.0.0",
+  "dependencies": {
+    "@capacitor/core": "^5.5.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.1.2"
+  },
+  "author": "Spacefeed <suporte@spacefeed.app>"
+}

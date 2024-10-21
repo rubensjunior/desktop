@@ -1,0 +1,41 @@
+{
+  "projectName": "spacefeed",
+  "designFramework": "bootstrap5",
+  "useRouting": true,
+  "routingHandler": "appConnect",
+  "routingFile": "/js/routes.js",
+  "styleFile": "/css/style.css",
+  "assetsFolder": "/assets",
+  "frameworks": [
+    {
+      "name": "appConnect",
+      "type": "local"
+    },
+    {
+      "name": "bootstrap5",
+      "type": "local"
+    },
+    {
+      "name": "capacitor",
+      "type": "local"
+    },
+    {
+      "name": "jquery_35",
+      "type": "local"
+    },
+    {
+      "name": "fontawesome_5",
+      "type": "local"
+    }
+  ],
+  "runtime": "capacitor",
+  "projectType": "app",
+  "capacitor": {
+    "capacitor": {
+      "checked": true
+    },
+    "platform": "web"
+  },
+  "appFile": "/js/app.js",
+  "extensions": []
+}
