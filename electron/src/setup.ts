@@ -102,14 +102,15 @@ export class ElectronCapacitorApp {
       join(app.getAppPath(), 'assets', process.platform === 'win32' ? 'appIcon.ico' : 'appIcon.png')
     );
     this.mainWindowState = windowStateKeeper({
-      defaultWidth: 1000,
-      defaultHeight: 800,
+      defaultWidth: 1200,
+      defaultHeight: 680,
     });
     // Setup preload script path and construct our main window.
     const preloadPath = join(app.getAppPath(), 'build', 'src', 'preload.js');
     this.MainWindow = new BrowserWindow({
       icon,
       show: false,
+      frame: false,
       x: this.mainWindowState.x,
       y: this.mainWindowState.y,
       width: this.mainWindowState.width,
@@ -224,8 +225,30 @@ export function setupContentSecurityPolicy(customScheme: string): void {
         ...details.responseHeaders,
         'Content-Security-Policy': [
           electronIsDev
-            ? `default-src ${customScheme}://* 'unsafe-inline' devtools://* 'unsafe-eval' data:`
-            : `default-src ${customScheme}://* 'unsafe-inline' data:`,
+            ? `
+              default-src 'self' ${customScheme}://* http://localhost:8100;
+              script-src 'self' 'unsafe-inline' 'unsafe-eval' ${customScheme}://* http://localhost:8100;
+              connect-src 'self' ${customScheme}://* http://localhost:8100 ws://localhost:8100 https://sun.spacefeed.app/* http://* ws://* wss://*;
+              style-src 'self' 'unsafe-inline' ${customScheme}://* http://localhost:8100 data: https://fonts.googleapis.com;
+              font-src 'self' data: ${customScheme}://* http://localhost:8100 https://fonts.gstatic.com file:;
+              img-src 'self' ${customScheme}://* http://localhost:8100 data: blob: file:;
+              media-src 'self' ${customScheme}://* http://localhost:8100;
+              worker-src 'self' blob: ${customScheme}://*;
+              frame-src 'self' ${customScheme}://* http://localhost:8100;
+              object-src 'self' ${customScheme}://*;
+            `.replace(/\s+/g, ' ').trim()
+            : `
+              default-src 'self' ${customScheme}://* http://localhost:8100;
+              script-src 'self' 'unsafe-inline' 'unsafe-eval' ${customScheme}://* http://localhost:8100;
+              connect-src 'self' ${customScheme}://* http://localhost:8100 ws://localhost:8100 https://sun.spacefeed.app/* http://* ws://* wss://*;
+              style-src 'self' 'unsafe-inline' ${customScheme}://* http://localhost:8100 data: https://fonts.googleapis.com;
+              font-src 'self' data: ${customScheme}://* http://localhost:8100 https://fonts.gstatic.com file:;
+              img-src 'self' ${customScheme}://* http://localhost:8100 data: blob: file:;
+              media-src 'self' ${customScheme}://* http://localhost:8100;
+              worker-src 'self' blob: ${customScheme}://*;
+              frame-src 'self' ${customScheme}://* http://localhost:8100;
+              object-src 'self' ${customScheme}://*;
+            `.replace(/\s+/g, ' ').trim()
         ],
       },
     });
