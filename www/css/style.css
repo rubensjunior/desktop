@@ -1,0 +1,33 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: radial-gradient(circle at center top, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8) 40%, rgba(201, 209, 217, 0.8));
+    background-color: #f9f9f9; /* Fallback para o fundo */
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.sideblack{
+    background-color: black;
+}
+
+.form-control{
+    height: 46px;
+}
+
+.form-label{
+    font-weight: 500;
+}
+
+.form-text{
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.new-button{
+    height: 48px;
+    font-weight: 500;
+}
