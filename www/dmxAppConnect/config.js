@@ -142,6 +142,14 @@ dmx.config({
         }
       ],
       "outputType": "array"
+    },
+    "empresa": {
+      "meta": null,
+      "outputType": "number"
+    },
+    "criadopor": {
+      "meta": null,
+      "outputType": "number"
     }
   }
 });

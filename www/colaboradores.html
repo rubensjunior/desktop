@@ -10,7 +10,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
-                <form id="criarFormColaborador" is="dmx-serverconnect-form" method="post" action="http://localhost:8100/api/desktop/colaboradores/cadastrar-colaborador" site="sfapis" dmx-on:success="criarFormColaborador.reset();criarModalColaborador.hide();apiListarColaboradores.load({});alertas.success('Cadastro realizado com sucesso!')" dmx-on:error="criarModalColaborador.hide();alertas.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response);academicocheck.setValue(0);admincheck.setValue(0);atendimentocheck.setValue(0);comercialcheck.setValue(0);diretoriacheck.setValue(0);financeirocheck.setValue(0);mktcheck.setValue(0);admcheck.setValue(0);ticheck.setValue(0);criadopor.setValue(0);empresa.setValue(0)">
+                <form id="criarFormColaborador" is="dmx-serverconnect-form" method="post" action="http://localhost:8100/api/desktop/colaboradores/cadastrar-colaborador" site="sfapis" dmx-on:success="criarFormColaborador.reset();criarModalColaborador.hide();apiListarColaboradores.load({empresa: usuarioLogado.data.queryUsuario.empresa});alertas.success('Cadastro realizado com sucesso!')" dmx-on:error="criarModalColaborador.hide();alertas.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response);academicocheck.setValue(0);admincheck.setValue(0);atendimentocheck.setValue(0);comercialcheck.setValue(0);diretoriacheck.setValue(0);financeirocheck.setValue(0);mktcheck.setValue(0);admcheck.setValue(0);ticheck.setValue(0);criadopor.setValue(0);empresa.setValue(0)">
+                    <div class="form-group mb-3">
+                        <input type="hidden" class="form-control" id="empresa" name="empresa" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="usuarioLogado.data.queryUsuario.empresa">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="hidden" class="form-control" id="criadopor" name="criadopor" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="identificacao.data.usuario">
+                    </div>
                     <div class="form-group mb-3">
                         <input type="text" class="form-control" id="nomecolaborador" name="nomecolaborador" aria-describedby="input1_help" placeholder="Nome do colaborador">
                     </div>
@@ -20,39 +26,39 @@
                     <div class="row mb-3 m-0 p-3 border rounded rounded-3 border-light-subtle">
                         <div class="col-4">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="0" id="academicocheck" name="academicocheck" dmx-on:checked="academicocheck.setValue(1)" dmx-on:unchecked="academicocheck.setValue(0)">
+                                <input class="form-check-input" type="checkbox" value="false" id="academicocheck" name="academicocheck" dmx-on:checked="academicocheck.setValue(true)" dmx-on:unchecked="academicocheck.setValue(false)">
                                 <label class="form-check-label" for="academicocheck">Acadêmico</label>
                             </div>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="0" id="admincheck" name="admincheck" dmx-on:checked="admincheck.setValue(1)" dmx-on:unchecked="admincheck.setValue(0)">
+                                <input class="form-check-input" type="checkbox" value="false" id="admincheck" name="admincheck" dmx-on:checked="admincheck.setValue(true)" dmx-on:unchecked="admincheck.setValue(false)">
                                 <label class="form-check-label" for="admincheck">Administrativo</label>
                             </div>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="0" id="atendimentocheck" name="atendimentocheck" dmx-on:checked="atendimentocheck.setValue(1)" dmx-on:unchecked="atendimentocheck.setValue(0)">
+                                <input class="form-check-input" type="checkbox" value="false" id="atendimentocheck" name="atendimentocheck" dmx-on:checked="atendimentocheck.setValue(true)" dmx-on:unchecked="atendimentocheck.setValue(false)">
                                 <label class="form-check-label" for="atendimentocheck">Atendimento</label>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="0" id="comercialcheck" name="comercialcheck" dmx-on:checked="comercialcheck.setValue(1)" dmx-on:unchecked="comercialcheck.setValue(0)">
+                                <input class="form-check-input" type="checkbox" value="false" id="comercialcheck" name="comercialcheck" dmx-on:checked="comercialcheck.setValue(true)" dmx-on:unchecked="comercialcheck.setValue(false)">
                                 <label class="form-check-label" for="comercialcheck">Comercial</label>
                             </div>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="0" id="diretoriacheck" name="diretoriacheck" dmx-on:checked="diretoriacheck.setValue(1)" dmx-on:unchecked="diretoriacheck.setValue(0)">
+                                <input class="form-check-input" type="checkbox" value="false" id="diretoriacheck" name="diretoriacheck" dmx-on:checked="diretoriacheck.setValue(true)" dmx-on:unchecked="diretoriacheck.setValue(false)">
                                 <label class="form-check-label" for="comercialcheck">Diretoria</label>
                             </div>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="0" id="financeirocheck" name="financeirocheck" dmx-on:checked="financeirocheck.setValue(1)" dmx-on:unchecked="financeirocheck.setValue(0)">
+                                <input class="form-check-input" type="checkbox" value="false" id="financeirocheck" name="financeirocheck" dmx-on:checked="financeirocheck.setValue(true)" dmx-on:unchecked="financeirocheck.setValue(false)">
                                 <label class="form-check-label" for="comercialcheck">Financeiro</label>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="0" id="mktcheck" name="mktcheck" dmx-on:checked="mktcheck.setValue(1)" dmx-on:unchecked="mktcheck.setValue(0)">
+                                <input class="form-check-input" type="checkbox" value="false" id="mktcheck" name="mktcheck" dmx-on:checked="mktcheck.setValue(true)" dmx-on:unchecked="mktcheck.setValue(false)">
                                 <label class="form-check-label" for="mktcheck">Marketing</label>
                             </div>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="0" id="ticheck" name="ticheck" dmx-on:checked="ticheck.setValue(1)" dmx-on:unchecked="ticheck.setValue(0)">
+                                <input class="form-check-input" type="checkbox" value="false" id="ticheck" name="ticheck" dmx-on:checked="ticheck.setValue(true)" dmx-on:unchecked="ticheck.setValue(false)">
                                 <label class="form-check-label" for="mktcheck">T.I</label>
                             </div>
                         </div>
@@ -60,7 +66,7 @@
                     <div class="row m-0 p-3 border rounded rounded-3 border-light-subtle">
                         <div class="col-4">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="0" id="admcheck" name="admcheck" dmx-on:checked="admcheck.setValue(1)" dmx-on:unchecked="admcheck.setValue(0)">
+                                <input class="form-check-input" type="checkbox" value="false" id="admcheck" name="admcheck" dmx-on:checked="admcheck.setValue(true)" dmx-on:unchecked="admcheck.setValue(false)">
                                 <label class="form-check-label" for="admcheck">Administrador</label>
                             </div>
                         </div>
