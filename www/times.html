@@ -1,5 +1,11 @@
 <!-- Wappler include head-page="backoffice.html" is="dmx-app" id="times" appConnect="local" bootstrap5="local" capacitor="local" jquery_35="local" fontawesome_5="local" components="{dmxBootstrap5Modal:{},dmxDataTraversal:{}}" -->
+<dmx-serverconnect id="apiEditarMembro" url="http://localhost:8100/api/desktop/times/atualizar-membro" site="sfapis"></dmx-serverconnect>
+<dmx-serverconnect id="apiListarMembros" noload="true" url="http://localhost:8100/api/desktop/times/listar-membros-time" site="sfapis"></dmx-serverconnect>
+
+
+
 <dmx-serverconnect id="apiListarTimes" url="http://localhost:8100/api/desktop/times/listar-times" site="sfapis" dmx-param:empresa="usuarioLogado.data.queryUsuario[0].empresa"></dmx-serverconnect>
+<dmx-serverconnect id="apiListarColaborador" url="http://localhost:8100/api/desktop/colaboradores/listar-colaboradores" site="sfapis" dmx-param:empresa="usuarioLogado.data.queryUsuario[0].empresa"></dmx-serverconnect>
 <dmx-data-detail id="data_time" dmx-bind:data="apiListarTimes.data.queryTimes" key="id"></dmx-data-detail>
 
 <div class="modal" id="criarModalTimes" is="dmx-bs5-modal" tabindex="-1">
@@ -62,6 +68,43 @@
     </div>
 </div>
 
+<div class="modal" id="criarMoldalmembro" is="dmx-bs5-modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Adicionar membro ao time</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" dmx-on:click="addFormMembro.reset();data_time.select(0)"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form id="addFormMembro" is="dmx-serverconnect-form" method="post" action="http://localhost:8100/api/desktop/times/add-membro" site="sfapis" dmx-on:error="addFormMembro.reset();alertas.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response);criarMoldalmembro.hide();data_time.select(0)" dmx-on:success="addFormMembro.reset();alertas.success('Membro adicionado ao time!');apiListarMembros.load({times: data_time.data.id})">
+                    <div class="form-group mb-3">
+                        <input type="hidden" class="form-control" id="times" name="times" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="data_time.data.id">
+                        <input type="hidden" class="form-control" id="empresa" name="empresa" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="data_time.data.empresa">
+                        <input type="hidden" class="form-control" id="usuariocriadopor" name="usuariocriadopor" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="usuarioLogado.data.queryUsuario[0].id">
+                    </div>
+                    <div class="form-group mb-3">
+                        <select id="membro" class="form-select" dmx-bind:options="apiListarColaborador.data.queryListarColaboradores" optiontext="nome" optionvalue="id" name="membro">
+                            <option selected="" value="">Escolha um colaborador</option>
+                        </select>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col" is="dmx-repeat" id="rpMembros" dmx-bind:repeat="apiListarMembros.data.queryListarMembrosTime" key="id">
+                        <div class="d-flex py-3 flex-row justify-content-between align-items-center border-bottom border-light-subtle">
+                            <h6 class="m-0">{{nome}}</h6>
+                            <img src="assets/duotune/arrows/arr097.svg" dmx-on:click="run([{run:{outputType:'text',action:`apiEditarMembro.load({id: id})`}},{wait:{delay:600}},{run:{outputType:'text',action:`apiListarMembros.load({times: data_time.data.id})`}}])" class="cursor">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" dmx-on:click="data_time.select(0);addFormMembro.reset()">Cancelar</button>
+                <button type="button" class="btn btn-primary" dmx-on:click="addFormMembro.submit()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <main>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div class="d-flex">
@@ -78,7 +121,7 @@
                             <h5 class="m-0 pe-3">{{nome}}</h5>
                             <img width="22" src="assets/duotune/general/gen055.svg" class="icon cursor" dmx-on:click="data_time.select(id);editarModalTimes.show()">
                         </div>
-                        <button id="btn1" class="btn btn-dark py-2">Adicionar membro</button>
+                        <button id="btn1" class="btn btn-dark py-2" dmx-on:click="data_time.select(id);apiListarMembros.load({times: id});criarMoldalmembro.show()">Adicionar membro</button>
                     </div>
                 </div>
             </div>

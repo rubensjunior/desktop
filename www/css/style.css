@@ -15,7 +15,7 @@ body {
     background-color: black;
 }
 
-.form-control{
+.form-control, .form-select{
     height: 46px;
 }
 

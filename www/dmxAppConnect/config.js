@@ -316,6 +316,35 @@ dmx.config({
         }
       ],
       "outputType": "array"
+    },
+    "rpMembros": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "number",
+          "name": "times"
+        },
+        {
+          "type": "number",
+          "name": "membro"
+        },
+        {
+          "type": "number",
+          "name": "empresa"
+        },
+        {
+          "type": "number",
+          "name": "ativo"
+        },
+        {
+          "type": "text",
+          "name": "nome"
+        }
+      ],
+      "outputType": "array"
     }
   }
 });
