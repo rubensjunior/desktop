@@ -93,3 +93,6 @@ border-radius: 24px;
 #conteudo{
     padding-bottom:10em;
 }
+.drag{
+    -webkit-app-region:drag;
+}

@@ -8,5 +8,9 @@ dmx.routing.routes = [
   {
     "path": "/",
     "url": "./conteudo.html"
+  },
+  {
+    "path": "/colaboradores",
+    "url": "./colaboradores.html"
   }
 ]
