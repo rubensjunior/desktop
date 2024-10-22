@@ -12,5 +12,9 @@ dmx.routing.routes = [
   {
     "path": "/colaboradores",
     "url": "./colaboradores.html"
+  },
+  {
+    "path": "/times",
+    "url": "./times.html"
   }
 ]

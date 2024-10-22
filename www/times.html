@@ -1,0 +1,50 @@
+<!-- Wappler include head-page="backoffice.html" is="dmx-app" id="times" appConnect="local" bootstrap5="local" capacitor="local" jquery_35="local" fontawesome_5="local" components="{dmxBootstrap5Modal:{}}" -->
+<div class="modal" id="criarModalTimes" is="dmx-bs5-modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Criar time</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form id="criarFormTime" is="dmx-serverconnect-form" method="post" action="http://localhost:8100/api/desktop/times/criar-time" site="sfapis" dmx-on:error="criarFormTime.reset();criarModalTimes.hide();alertas.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response)" dmx-on:success="criarFormTime.reset();criarModalTimes.hide();apiListarTimes.load({empresa: usuarioLogado.data.queryUsuario[0].empresa});alertas.success('Cadastro realizado com sucesso!')">
+                    <div class="form-group mb-3">
+                        <input type="text" class="form-control" id="nometime" name="nometime" aria-describedby="input1_help" placeholder="Nome do time">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="hidden" class="form-control" id="empresa" name="empresa" aria-describedby="input1_help" dmx-bind:value="usuarioLogado.data.queryUsuario[0].empresa">
+                        <input type="hidden" class="form-control" id="timecriadopor" name="timecriadopor" aria-describedby="input1_help" dmx-bind:value="usuarioLogado.data.queryUsuario[0].id">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" dmx-on:click="criarFormTime.submit()">Cadastrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<dmx-serverconnect id="apiListarTimes" url="http://localhost:8100/api/desktop/times/listar-times" site="sfapis" dmx-param:empresa="usuarioLogado.data.queryUsuario[0].empresa"></dmx-serverconnect>
+<main>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex">
+            <h4 class=" m-0">Times<small class="text-body-secondary sub-title">Gestão de equipes para projetos</small>
+            </h4>
+        </div><button id="btn7" class="btn btn-dark py-2" data-bs-toggle="modal" data-bs-target="#criarModalTimes">Criar novo</button>
+    </div>
+    <div class="container-fluid px-0">
+        <div class="row px-1" is="dmx-repeat" id="rpTimes" dmx-bind:repeat="apiListarTimes.data.queryTimes" key="id">
+            <div class="col-4 px-2 pb-4">
+                <div class="row p-0 m-0">
+                    <div class="col bg-white p-4 rounded-3 new-shadow align-self-stretch">
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h5 class="m-0 pe-3">{{nome}}</h5>
+                            <img width="22" src="assets/duotune/general/gen055.svg" class="icon cursor" dmx-on:click="data_time.select(id);editarMoldalTime.show()">
+                        </div>
+                        <button id="btn1" class="btn btn-dark py-2">Adicionar membro</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
