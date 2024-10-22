@@ -150,6 +150,83 @@ dmx.config({
     "criadopor": {
       "meta": null,
       "outputType": "number"
+    },
+    "data_colaborador": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "text",
+          "name": "nome"
+        },
+        {
+          "type": "text",
+          "name": "email"
+        },
+        {
+          "type": "number",
+          "name": "isAdmin"
+        },
+        {
+          "type": "number",
+          "name": "isColaborador"
+        },
+        {
+          "type": "number",
+          "name": "empresa"
+        },
+        {
+          "type": "number",
+          "name": "isAtivo"
+        },
+        {
+          "type": "text",
+          "name": "passSecurity"
+        },
+        {
+          "type": "number",
+          "name": "academico"
+        },
+        {
+          "type": "number",
+          "name": "administrativo"
+        },
+        {
+          "type": "number",
+          "name": "comercial"
+        },
+        {
+          "type": "number",
+          "name": "diretoria"
+        },
+        {
+          "type": "number",
+          "name": "financeiro"
+        },
+        {
+          "type": "number",
+          "name": "marketing"
+        },
+        {
+          "type": "number",
+          "name": "atendimento"
+        },
+        {
+          "type": "number",
+          "name": "ti"
+        },
+        {
+          "type": "datetime",
+          "name": "criado-em"
+        },
+        {
+          "type": "number",
+          "name": "criado-por"
+        }
+      ],
+      "outputType": "array"
     }
   }
 });

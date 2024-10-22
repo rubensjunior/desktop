@@ -1,7 +1,9 @@
-<!-- Wappler include head-page="backoffice.html" is="dmx-app" id="colaboradores" appconnect="local" bootstrap5="local" capacitor="local" jquery_35="local" fontawesome_5="local" components="{dmxBootstrap5Modal:{},dmxNotifications:{},dmxBootstrap5Offcanvas:{}}" -->
+<!-- Wappler include head-page="backoffice.html" is="dmx-app" id="colaboradores" appconnect="local" bootstrap5="local" capacitor="local" jquery_35="local" fontawesome_5="local" components="{dmxBootstrap5Modal:{},dmxNotifications:{},dmxBootstrap5Offcanvas:{},dmxValidator:{},dmxDataTraversal:{}}" -->
 
 
-<dmx-serverconnect id="apiListarColaboradores" url="http://localhost:8100/api/desktop/colaboradores/listar-colaboradores" site="sfapis" dmx-param:empresa="usuarioLogado.data.queryUsuario.empresa"></dmx-serverconnect>
+
+<dmx-serverconnect id="apiListarColaboradores" url="http://localhost:8100/api/desktop/colaboradores/listar-colaboradores" site="sfapis" dmx-param:empresa="usuarioLogado.data.queryUsuario[0].empresa"></dmx-serverconnect>
+<dmx-data-detail id="data_colaborador" dmx-bind:data="apiListarColaboradores.data.queryListarColaboradores" key="id"></dmx-data-detail>
 <div class="modal" id="criarModalColaborador" is="dmx-bs5-modal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -10,64 +12,75 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
-                <form id="criarFormColaborador" is="dmx-serverconnect-form" method="post" action="http://localhost:8100/api/desktop/colaboradores/cadastrar-colaborador" site="sfapis" dmx-on:success="criarFormColaborador.reset();criarModalColaborador.hide();apiListarColaboradores.load({empresa: usuarioLogado.data.queryUsuario.empresa});alertas.success('Cadastro realizado com sucesso!')" dmx-on:error="criarModalColaborador.hide();alertas.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response);academicocheck.setValue(0);admincheck.setValue(0);atendimentocheck.setValue(0);comercialcheck.setValue(0);diretoriacheck.setValue(0);financeirocheck.setValue(0);mktcheck.setValue(0);admcheck.setValue(0);ticheck.setValue(0);criadopor.setValue(0);empresa.setValue(0)">
+                <form id="criarFormColaborador" is="dmx-serverconnect-form" method="post" action="http://localhost:8100/api/desktop/colaboradores/cadastrar-colaborador" site="sfapis" dmx-on:success="criarFormColaborador.reset();criarModalColaborador.hide();apiListarColaboradores.load({empresa: usuarioLogado.data.queryUsuario[0].empresa});alertas.success('Cadastro realizado com sucesso!')" dmx-on:error="criarModalColaborador.hide();alertas.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response);academicocheck.setValue(0);admincheck.setValue(0);atendimentocheck.setValue(0);comercialcheck.setValue(0);diretoriacheck.setValue(0);financeirocheck.setValue(0);mktcheck.setValue(0);admcheck.setValue(0);ticheck.setValue(0);criadopor.setValue(0);empresa.setValue(0)">
                     <div class="form-group mb-3">
-                        <input type="hidden" class="form-control" id="empresa" name="empresa" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="usuarioLogado.data.queryUsuario.empresa">
+                        <input type="hidden" class="form-control" id="empresa" name="empresa" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="usuarioLogado.data.queryUsuario[0].empresa">
                     </div>
                     <div class="form-group mb-3">
-                        <input type="hidden" class="form-control" id="criadopor" name="criadopor" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="identificacao.data.usuario">
+                        <input type="hidden" class="form-control" id="criadopor" name="criadopor" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="usuarioLogado.data.queryUsuario[0].id">
                     </div>
                     <div class="form-group mb-3">
-                        <input type="text" class="form-control" id="nomecolaborador" name="nomecolaborador" aria-describedby="input1_help" placeholder="Nome do colaborador">
+                        <input type="hidden" class="form-control" id="academicocheck" name="academicocheck" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="academicocheck01.value">
+                        <input type="hidden" class="form-control" id="admincheck" name="admincheck" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="admincheck01.value">
+                        <input type="hidden" class="form-control" id="atendimentocheck" name="atendimentocheck" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="atendimentocheck01.value">
+                        <input type="hidden" class="form-control" id="comercialcheck" name="comercialcheck" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="comercialcheck01.value">
+                        <input type="hidden" class="form-control" id="diretoriacheck" name="diretoriacheck" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="diretoriacheck01.value">
+                        <input type="hidden" class="form-control" id="financeirocheck" name="financeirocheck" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="financeirocheck01.value">
+                        <input type="hidden" class="form-control" id="mktcheck" name="mktcheck" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="mktcheck01.value">
+                        <input type="hidden" class="form-control" id="ticheck" name="ticheck" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="ticheck01.value">
+                        <input type="hidden" class="form-control" id="admcheck" name="admcheck" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="admcheck01.value">
                     </div>
                     <div class="form-group mb-3">
-                        <input type="email" class="form-control" id="emailcolaborador" name="emailcolaborador" aria-describedby="input1_help" placeholder="E-mail para login">
+                        <input type="text" class="form-control" id="nomecolaborador" name="nomecolaborador" aria-describedby="input1_help" placeholder="Nome do colaborador" required="" data-msg-required="Este é um campo obriatório.">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="email" class="form-control" id="emailcolaborador" name="emailcolaborador" aria-describedby="input1_help" placeholder="E-mail para login" required="" data-msg-required="Este é um campo obriatório." data-rule-email="" data-msg-email="Insira um e-mail válido.">
                     </div>
                     <div class="row mb-3 m-0 p-3 border rounded rounded-3 border-light-subtle">
                         <div class="col-4">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="false" id="academicocheck" name="academicocheck" dmx-on:checked="academicocheck.setValue(true)" dmx-on:unchecked="academicocheck.setValue(false)">
-                                <label class="form-check-label" for="academicocheck">Acadêmico</label>
+                                <input class="form-check-input" type="checkbox" id="academicocheck01" name="academicocheck01" dmx-on:checked="academicocheck01.setValue(1)" dmx-on:unchecked="academicocheck01.setValue(0)" value="0">
+                                <label class="form-check-label" for="academicocheck01">Acadêmico</label>
                             </div>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="false" id="admincheck" name="admincheck" dmx-on:checked="admincheck.setValue(true)" dmx-on:unchecked="admincheck.setValue(false)">
-                                <label class="form-check-label" for="admincheck">Administrativo</label>
+                                <input class="form-check-input" type="checkbox" id="admincheck01" name="admincheck01" dmx-on:checked="admincheck01.setValue(1)" dmx-on:unchecked="admincheck01.setValue(0)" value="0">
+                                <label class="form-check-label" for="admincheck01">Administrativo</label>
                             </div>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="false" id="atendimentocheck" name="atendimentocheck" dmx-on:checked="atendimentocheck.setValue(true)" dmx-on:unchecked="atendimentocheck.setValue(false)">
-                                <label class="form-check-label" for="atendimentocheck">Atendimento</label>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="false" id="comercialcheck" name="comercialcheck" dmx-on:checked="comercialcheck.setValue(true)" dmx-on:unchecked="comercialcheck.setValue(false)">
-                                <label class="form-check-label" for="comercialcheck">Comercial</label>
-                            </div>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="false" id="diretoriacheck" name="diretoriacheck" dmx-on:checked="diretoriacheck.setValue(true)" dmx-on:unchecked="diretoriacheck.setValue(false)">
-                                <label class="form-check-label" for="comercialcheck">Diretoria</label>
-                            </div>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="false" id="financeirocheck" name="financeirocheck" dmx-on:checked="financeirocheck.setValue(true)" dmx-on:unchecked="financeirocheck.setValue(false)">
-                                <label class="form-check-label" for="comercialcheck">Financeiro</label>
+                                <input class="form-check-input" type="checkbox" id="atendimentocheck01" name="atendimentocheck01" dmx-on:checked="atendimentocheck01.setValue(1)" dmx-on:unchecked="atendimentocheck01.setValue(0)" value="0">
+                                <label class="form-check-label" for="atendimentocheck01">Atendimento</label>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="false" id="mktcheck" name="mktcheck" dmx-on:checked="mktcheck.setValue(true)" dmx-on:unchecked="mktcheck.setValue(false)">
-                                <label class="form-check-label" for="mktcheck">Marketing</label>
+                                <input class="form-check-input" type="checkbox" id="comercialcheck01" name="comercialcheck01" dmx-on:checked="comercialcheck01.setValue(1)" dmx-on:unchecked="comercialcheck01.setValue(0)" value="0">
+                                <label class="form-check-label" for="comercialcheck01">Comercial</label>
                             </div>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="false" id="ticheck" name="ticheck" dmx-on:checked="ticheck.setValue(true)" dmx-on:unchecked="ticheck.setValue(false)">
-                                <label class="form-check-label" for="mktcheck">T.I</label>
+                                <input class="form-check-input" type="checkbox" id="diretoriacheck01" name="diretoriacheck01" dmx-on:checked="diretoriacheck01.setValue(1)" dmx-on:unchecked="diretoriacheck01.setValue(0)" value="0">
+                                <label class="form-check-label" for="comercialcheck01">Diretoria</label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="financeirocheck01" name="financeirocheck01" dmx-on:checked="financeirocheck01.setValue(1)" dmx-on:unchecked="financeirocheck01.setValue(0)" value="0">
+                                <label class="form-check-label" for="comercialcheck01">Financeiro</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="mktcheck01" name="mktcheck01" dmx-on:checked="mktcheck01.setValue(1)" dmx-on:unchecked="mktcheck01.setValue(0)" value="0">
+                                <label class="form-check-label" for="mktcheck01">Marketing</label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="ticheck01" name="ticheck01" dmx-on:checked="ticheck01.setValue(1)" dmx-on:unchecked="ticheck01.setValue(0)" value="0">
+                                <label class="form-check-label" for="mktcheck01">T.I</label>
                             </div>
                         </div>
                     </div>
                     <div class="row m-0 p-3 border rounded rounded-3 border-light-subtle">
                         <div class="col-4">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="false" id="admcheck" name="admcheck" dmx-on:checked="admcheck.setValue(true)" dmx-on:unchecked="admcheck.setValue(false)">
-                                <label class="form-check-label" for="admcheck">Administrador</label>
+                                <input class="form-check-input" type="checkbox" id="admcheck01" name="admcheck01" dmx-on:checked="admcheck01.setValue(1)" dmx-on:unchecked="admcheck01.setValue(0)" value="0">
+                                <label class="form-check-label" for="admcheck01">Administrador</label>
                             </div>
                         </div>
                     </div>
@@ -76,6 +89,97 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-primary" dmx-on:click="criarFormColaborador.submit()">Cadastrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="edotarModalColaborador" is="dmx-bs5-modal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar colaborador</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" dmx-on:click="data_colaborador.select(0)"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form id="criarFormColaborador1" is="dmx-serverconnect-form" method="post" action="http://localhost:8100/api/desktop/colaboradores/atualizar-colaborador" site="sfapis" dmx-on:success="criarFormColaborador1.reset();data_colaborador.select(0);edotarModalColaborador.hide();apiListarColaboradores.load({empresa: usuarioLogado.data.queryUsuario[0].empresa});alertas.info('Atualização realizada com sucesso!')" dmx-on:error="criarFormColaborador1.reset();edotarModalColaborador.hide();data_colaborador.select(0);alertas.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response)">
+                    <div class="form-group mb-3">
+                        <input type="hidden" class="form-control" id="editacademicocheck" name="editacademicocheck" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="academico1.value">
+                        <input type="hidden" class="form-control" id="editadministrativo" name="editadministrativo" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="admin1.value">
+                        <input type="hidden" class="form-control" id="editatendimentocheck" name="editatendimentocheck" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="atendimento1.value">
+                        <input type="hidden" class="form-control" id="editcomercialcheck" name="editcomercialcheck" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="comercial1.value">
+                        <input type="hidden" class="form-control" id="editdiretoriacheck" name="editdiretoriacheck" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="diretoria1.value">
+                        <input type="hidden" class="form-control" id="editfinanceirocheck" name="editfinanceirocheck" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="financeiro1.value">
+                        <input type="hidden" class="form-control" id="editmktcheck" name="editmktcheck" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="mkt1.value">
+                        <input type="hidden" class="form-control" id="editticheck" name="editticheck" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="ti1.value">
+                        <input type="hidden" class="form-control" id="editadmcheck" name="editadmcheck" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="adm1.value">
+                        <input type="hidden" class="form-control" id="editativocheck" name="editativocheck" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="ativo1.value">
+                        <input type="hidden" class="form-control" id="id" name="id" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="data_colaborador.data.id">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="text" class="form-control" id="editnomecolaborador" name="editnomecolaborador" aria-describedby="input1_help" placeholder="Nome do colaborador" required="" data-msg-required="Este é um campo obriatório." dmx-bind:value="data_colaborador.data.nome">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input type="email" class="form-control" id="editemailcolaborador" name="editemailcolaborador" aria-describedby="input1_help" placeholder="E-mail para login" required="" data-msg-required="Este é um campo obriatório." data-rule-email="" data-msg-email="Insira um e-mail válido." dmx-bind:value="data_colaborador.data.email">
+                    </div>
+                    <div class="row mb-3 m-0 p-3 border rounded rounded-3 border-light-subtle">
+                        <div class="col-4">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="academico1" name="academico1" dmx-on:checked="academico1.setValue(1)" dmx-on:unchecked="academico1.setValue(0)" dmx-bind:value="data_colaborador.data.academico" dmx-bind:checked="data_colaborador.data.academico==1">
+                                <label class="form-check-label" for="editacademicocheck">Acadêmico</label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="admin1" name="admin1" dmx-on:checked="admin1.setValue(1)" dmx-on:unchecked="admin1.setValue(0)" value="0" dmx-bind:value="data_colaborador.data.administrativo" dmx-bind:checked="data_colaborador.data.administrativo==1">
+                                <label class="form-check-label" for="editadministrativo">Administrativo</label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="atendimento1" name="atendimento1" dmx-on:checked="atendimento1.setValue(1)" dmx-on:unchecked="atendimento1.setValue(0)" value="0" dmx-bind:value="data_colaborador.data.atendimento" dmx-bind:checked="data_colaborador.data.atendimento==1">
+                                <label class="form-check-label" for="editatendimentocheck">Atendimento</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="comercial1" name="comercial1" dmx-on:checked="comercial1.setValue(1)" dmx-on:unchecked="comercial1.setValue(0)" value="0" dmx-bind:value="data_colaborador.data.comercial" dmx-bind:checked="data_colaborador.data.comercial==1">
+                                <label class="form-check-label" for="editcomercialcheck">Comercial</label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="diretoria1" name="diretoria1" dmx-on:checked="diretoria1.setValue(1)" dmx-on:unchecked="diretoria1.setValue(0)" value="0" dmx-bind:value="data_colaborador.data.diretoria" dmx-bind:checked="data_colaborador.data.diretoria==1">
+                                <label class="form-check-label" for="editcomercialcheck">Diretoria</label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="financeiro1" name="financeiro1" dmx-on:checked="financeiro1.setValue(1)" dmx-on:unchecked="financeiro1.setValue(0)" value="0" dmx-bind:value="data_colaborador.data.financeiro" dmx-bind:checked="data_colaborador.data.financeiro==1">
+                                <label class="form-check-label" for="editcomercialcheck">Financeiro</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="mkt1" name="mkt1" dmx-on:checked="mkt1.setValue(1)" dmx-on:unchecked="mkt1.setValue(0)" value="0" dmx-bind:value="data_colaborador.data.marketing" dmx-bind:checked="data_colaborador.data.marketing==1">
+                                <label class="form-check-label" for="editmktcheck">Marketing</label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="ti1" name="ti1" dmx-on:checked="ti1.setValue(1)" dmx-on:unchecked="ti1.setValue(0)" value="0" dmx-bind:value="data_colaborador.data.ti" dmx-bind:checked="data_colaborador.data.ti==1">
+                                <label class="form-check-label" for="editmktcheck">T.I</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-0 p-3 border rounded rounded-3 border-light-subtle">
+                        <div class="col-4">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="adm1" name="adm1" dmx-on:checked="adm1.setValue(1)" dmx-on:unchecked="adm1.setValue(0)" value="0" dmx-bind:value="data_colaborador.data.isAdmin" dmx-bind:checked="data_colaborador.data.isAdmin==1">
+                                <label class="form-check-label" for="editadmcheck">Administrador</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="ativo1" name="ativo1" dmx-on:checked="ativo1.setValue(1)" dmx-on:unchecked="ativo1.setValue(0)" value="0" dmx-bind:value="data_colaborador.data.isAtivo" dmx-bind:checked="data_colaborador.data.isAtivo==1">
+                                <label class="form-check-label" for="ativo1">Ativo</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" dmx-on:click="data_colaborador.select(0)">Cancelar</button>
+                <button type="button" class="btn btn-primary" dmx-on:click="criarFormColaborador1.submit()">Atualizar</button>
             </div>
         </div>
     </div>
@@ -122,7 +226,7 @@
                                     <div class="dropdown">
                                         <button id="editar" class="btn dropdown-toggle btn-sm btn-light txt-tab-button" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ações</button>
                                         <div class="dropdown-menu" aria-labelledby="dropdown1">
-                                            <button id="btn2" class="btn w-100 text-start" dmx-on:click="editarColagorador.select(id);editarModal.show()" data-bs-target="#editarModal" type="submit">Editar</button>
+                                            <button id="btn2" class="btn w-100 text-start" dmx-on:click="data_colaborador.select(id);edotarModalColaborador.show()" data-bs-target="#editarModal" type="submit">Editar</button>
                                         </div>
                                     </div>
                                 </div>
