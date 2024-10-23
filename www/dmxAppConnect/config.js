@@ -346,5 +346,97 @@ dmx.config({
       ],
       "outputType": "array"
     }
+  },
+  "projetos": {
+    "rpProjetos": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "text",
+          "name": "nome-projeto"
+        },
+        {
+          "type": "text",
+          "name": "descricao-projeto"
+        },
+        {
+          "type": "number",
+          "name": "times"
+        },
+        {
+          "type": "number",
+          "name": "empresa"
+        },
+        {
+          "type": "number",
+          "name": "responsavel"
+        },
+        {
+          "type": "datetime",
+          "name": "criado-em"
+        },
+        {
+          "type": "number",
+          "name": "criado-por"
+        },
+        {
+          "type": "number",
+          "name": "ativo"
+        },
+        {
+          "type": "text",
+          "name": "nome"
+        }
+      ],
+      "outputType": "array"
+    },
+    "data_projeto": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "text",
+          "name": "nome-projeto"
+        },
+        {
+          "type": "text",
+          "name": "descricao-projeto"
+        },
+        {
+          "type": "number",
+          "name": "times"
+        },
+        {
+          "type": "number",
+          "name": "empresa"
+        },
+        {
+          "type": "number",
+          "name": "responsavel"
+        },
+        {
+          "type": "datetime",
+          "name": "criado-em"
+        },
+        {
+          "type": "number",
+          "name": "criado-por"
+        },
+        {
+          "type": "number",
+          "name": "ativo"
+        },
+        {
+          "type": "text",
+          "name": "nome"
+        }
+      ],
+      "outputType": "array"
+    }
   }
 });

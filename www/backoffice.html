@@ -37,21 +37,21 @@
         <div class="row bg-black border-bottom border-dark py-2 ">
             <div class="col-4 align-self-center">
                 <div class="nav w-100 flex-row">
-                    <div class="nav-item dropdown nav-drop"><a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" id="dropdown4" role="button" aria-haspopup="true" aria-expanded="false">Financeiro</a>
+                    <div class="nav-item dropdown nav-drop"><a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" id="dropdown4" role="button" aria-haspopup="true" aria-expanded="false">Financeiro</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown1">
                             <a class="dropdown-item" href="#">Action</a>
                             <a class="dropdown-item" href="#">Another action</a>
                             <a class="dropdown-item" href="#">Something else here</a>
                         </div>
                     </div>
-                    <div class="nav-item dropdown nav-drop"><a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" id="dropdown4" role="button" aria-haspopup="true" aria-expanded="false">Suporte</a>
+                    <div class="nav-item dropdown nav-drop"><a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" id="dropdown4" role="button" aria-haspopup="true" aria-expanded="false">Suporte</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown1">
                             <a class="dropdown-item" href="#">Action</a>
                             <a class="dropdown-item" href="#">Another action</a>
                             <a class="dropdown-item" href="#">Something else here</a>
                         </div>
                     </div>
-                    <div class="nav-item dropdown nav-drop"><a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" id="dropdown4" role="button" aria-haspopup="true" aria-expanded="false">Ajuda</a>
+                    <div class="nav-item dropdown nav-drop"><a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" id="dropdown4" role="button" aria-haspopup="true" aria-expanded="false">Ajuda</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown1">
                             <a class="dropdown-item" href="#">Action</a>
                             <a class="dropdown-item" href="#">Another action</a>
@@ -84,13 +84,14 @@
         <div class="row px-3 h-100">
             <div class="col-md-2 bg-white py-4 px-3 rounded-3 new-shadow align-self-start" id="sidebar">
                 <div class="d-flex flex-column justify-content-start">
-                    <button id="btn2" class="btn text-start f-color mb-2" dmx-on:click="navegacao.goto('/colaboradores',true)"><img class="me-2 icon" src="assets/duotune/abstract/abs029.svg">Dashboard</button><button id="btn4" class="btn text-start f-color mb-2" dmx-on:click="navegacao.goto('/colaboradores',true)"><img class="me-2 icon" src="assets/duotune/abstract/abs022.svg">Colaboradores</button><button id="btn3" class="btn text-start f-color mb-2" data-bs-toggle="collapse" data-bs-target="#projetosTarefas"><img class="me-2 icon" src="assets/duotune/abstract/abs042.svg">Projetos e tarefas</button>
+                    <button id="btn2" class="btn text-start f-color mb-2 ps-0" dmx-on:click="navegacao.goto('/colaboradores',true)"><img class="me-2 icon" src="assets/duotune/abstract/abs029.svg">Dashboard</button><button id="btn4" class="btn text-start f-color mb-2 ps-0" dmx-on:click="navegacao.goto('/colaboradores',true)"><img class="me-2 icon" src="assets/duotune/abstract/abs022.svg">Colaboradores</button><button id="btn3" class="btn text-start f-color mb-2 ps-0" data-bs-toggle="collapse" data-bs-target="#projetosTarefas"><img class="me-2 icon" src="assets/duotune/abstract/abs042.svg">Projetos e tarefas</button>
 
-                    <div class="collapse" id="projetosTarefas" is="dmx-bs5-collapse">
-                        <button id="btn7" class="btn text-start ms-4" dmx-on:click="navegacao.goto('/times',true)">Times</button>
+                    <div class="collapse border-start border-light-subtle " id="projetosTarefas" is="dmx-bs5-collapse">
+                        <button id="btn7" class="btn text-start ms-3 w-75" dmx-on:click="navegacao.goto('/times',true)">Times</button>
+                        <button id="btn8" class="btn text-start ms-3 w-75" dmx-on:click="navegacao.goto('/projetos',true)">Projetos</button>
                     </div>
-                    <button id="btn5" class="btn text-start f-color mb-2"><img class="me-2 icon" src="assets/duotune/abstract/abs023.svg">Leads</button>
-                    <button id="btn6" class="btn text-start f-color"><img class="me-2 icon" src="assets/duotune/abstract/abs020.svg">Chamados</button>
+                    <button id="btn5" class="btn text-start f-color mb-2 ps-0"><img class="me-2 icon" src="assets/duotune/abstract/abs023.svg">Leads</button>
+                    <button id="btn6" class="btn text-start f-color mb-2 ps-0"><img class="me-2 icon" src="assets/duotune/abstract/abs020.svg">Chamados</button>
                 </div>
             </div>
             <div class="col-md-10 px-5 h-100 overflow-y-auto" id="conteudo">
