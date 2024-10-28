@@ -40,5 +40,6 @@
     "deviceId": ""
   },
   "appFile": "/js/app.js",
-  "extensions": []
+  "extensions": [],
+  "activeGitRemote": "desktop"
 }
