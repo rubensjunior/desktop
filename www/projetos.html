@@ -1,4 +1,6 @@
-<!-- Wappler include head-page="backoffice.html" is="dmx-app" id="projetos" appConnect="local" bootstrap5="local" capacitor="local" jquery_35="local" fontawesome_5="local" components="{dmxBootstrap5Modal:{},dmxDataTraversal:{}}" -->
+<!-- Wappler include head-page="backoffice.html" is="dmx-app" id="projetos" appConnect="local" bootstrap5="local" capacitor="local" jquery_35="local" fontawesome_5="local" components="{dmxBootstrap5Modal:{},dmxDataTraversal:{},dmxBootstrap5Navigation:{}}" -->
+
+<dmx-serverconnect id="apiListarTarefas" noload="true" url="http://localhost:8100/api/desktop/tarefas/listar-tarefas" site="sfapis" dmx-param:projeto="data_projeto.data.id"></dmx-serverconnect>
 
 <dmx-serverconnect id="apiListarProjetos" url="http://localhost:8100/api/desktop/projetos/listar-projetos" site="sfapis" dmx-param:empresa="usuarioLogado.data.queryUsuario[0].empresa"></dmx-serverconnect>
 <dmx-serverconnect id="apiListarTimes" url="http://localhost:8100/api/desktop/times/listar-times" site="sfapis" dmx-param:empresa="usuarioLogado.data.queryUsuario[0].empresa"></dmx-serverconnect>
@@ -55,10 +57,10 @@
                 <form id="editarFormProjeto" is="dmx-serverconnect-form" method="post" action="http://localhost:8100/api/desktop/projetos/atualizar-projeto" site="sfapis" dmx-on:error="editarFormProjeto.reset();editarModalProjeto.hide();data_projeto.select(0);alertas.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response)" dmx-on:success="editarFormProjeto.reset();editarModalProjeto.hide();data_projeto.select(0);apiListarProjetos.load({empresa: apiListarProjetos.data.queryListarProjetos[0].empresa});alertas.info('Atualização realizada com sucesso!')">
 
                     <div class="form-group mb-3">
-                        <input class="form-control" id="editid" name="editid" aria-describedby="input1_help" placeholder="Nome do projeto" dmx-bind:value="data_projeto.data.id">
-                        <input class="form-control" id="edittimes" name="edittimes" aria-describedby="input1_help" placeholder="Nome do projeto" dmx-bind:value="timeSelect1.selectedValue">
-                        <input class="form-control" id="editresponsavel" name="editresponsavel" aria-describedby="input1_help" placeholder="Nome do projeto" dmx-bind:value="responsavelSelect1.selectedValue">
-                        <input class="form-control" id="ativo" name="ativo" aria-describedby="input1_help" placeholder="Nome do projeto" dmx-bind:value="ativo1.value">
+                        <input class="form-control" id="editid" name="editid" aria-describedby="input1_help" placeholder="Nome do projeto" dmx-bind:value="data_projeto.data.id" type="hidden">
+                        <input class="form-control" id="edittimes" name="edittimes" aria-describedby="input1_help" placeholder="Nome do projeto" dmx-bind:value="timeSelect1.selectedValue" type="hidden">
+                        <input class="form-control" id="editresponsavel" name="editresponsavel" aria-describedby="input1_help" placeholder="Nome do projeto" dmx-bind:value="responsavelSelect1.selectedValue" type="hidden">
+                        <input class="form-control" id="ativo" name="ativo" aria-describedby="input1_help" placeholder="Nome do projeto" dmx-bind:value="ativo1.value" type="hidden">
 
                     </div>
                     <div class="form-group mb-3">
@@ -89,13 +91,70 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" dmx-on:click="editarFormProjeto.reset();data_projeto.select(0)">Cancelar</button>
-                <button type="button" class="btn btn-primary" dmx-on:click="editarFormProjeto.submit()">Cadastrar</button>
+                <button type="button" class="btn btn-primary" dmx-on:click="editarFormProjeto.submit()">Atualizar</button>
             </div>
         </div>
     </div>
 </div>
 
+<div class="modal" id="criarModalTarefas" is="dmx-bs5-modal" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Criar atividade</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form id="form1">
+
+                    <div class="form-group mb-3">
+                        <input type="text" class="form-control" id="input1" name="input1" aria-describedby="input1_help" placeholder="Enter some text">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <textarea id="text1" class="form-control text-area" placeholder="Descrição da atividade"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group mb-3">
+                                <input type="date" class="form-control" id="input2" name="input2" aria-describedby="input1_help" placeholder="Data de início">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group mb-3">
+                                <input type="date" class="form-control" id="input3" name="input3" aria-describedby="input1_help" placeholder="Data de fim">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <select id="select1" class="form-select">
+                                    <option value="1">Escolha um time</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <select id="select2" class="form-select">
+                                    <option value="1">Escolha um responsável</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <main>
+
+
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div class="d-flex">
             <h4 class=" m-0">Projetos<small class="text-body-secondary sub-title">Gestão de projetos e tarefas</small>
@@ -114,11 +173,52 @@
                         <h5>{{_['nome-projeto']}}</h5>
                         <p class="txt-tab text-start f-color">{{_['descricao-projeto']}}</p>
                         <div class="d-flex flex-row justify-content-between mb-3">
-                            <button id="btn1" class="btn btn-dark">Detalhes do projeto</button>
+                            <button id="btn1" class="btn btn-dark" dmx-on:click="data_projeto.select(id)">Detalhes do projeto</button>
                         </div>
                     </div>
                 </div>
 
+            </div>
+        </div>
+
+
+    </div>
+    <div class="container-fluid bg-white px-4 pt-4 rounded-3 new-shadow mb-3">
+        <div class="row">
+            <div class="col">
+                <div class="d-flex mb-2">
+                    <p class="btn-txt-min text-start m-0">{{view1.data_projeto.data.nome}}</p>
+                </div>
+                <h5>{{view1.data_projeto.data['nome-projeto']}}</h5>
+                <p>{{view1.data_projeto.data['descricao-projeto']}}</p>
+            </div>
+            <div class="col text-end align-self-center">
+                <button id="btn2" class="btn btn-dark py-2">Criar tarefas</button>
+            </div>
+        </div>
+        <div class="row mx-0 mt-2">
+            <div class="col px-0 border-top">
+                <div class="nav w-100 ps-0 py-1">
+                    <a class="nav-item nav-link ps-0 text-black" dmx-on:click="apiListarTarefas.load({projeto: view1.data_projeto.data.id})">Tarefas</a>
+                    <a class="nav-item nav-link text-black" href="#">Anexos</a>
+                    <a class="nav-item nav-link text-black" href="#">Reuniões</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid bg-white p-4 rounded-3 new-shadow">
+        <div class="row pb-3 gx-2 align-items-center border-bottom mx-0 ps-0">
+            <div class="col align-self-center">
+                <h6 class="p-1 m-0 txt-tab-title">TAREFA</h6>
+            </div>
+            <div class="col align-self-center">
+                <h6 class="p-1 m-0 txt-tab-title">PRAZO</h6>
+            </div>
+            <div class="col align-self-center">
+                <h6 class="p-1 m-0 txt-tab-title">STATUS</h6>
+            </div>
+            <div class="col align-self-center">
+                <h6 class="p-1 m-0 txt-tab-title text-end">AÇÕES</h6>
             </div>
         </div>
     </div>
