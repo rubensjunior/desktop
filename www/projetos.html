@@ -1,4 +1,4 @@
-<!-- Wappler include head-page="backoffice.html" is="dmx-app" id="projetos" appConnect="local" bootstrap5="local" capacitor="local" jquery_35="local" fontawesome_5="local" components="{dmxBootstrap5Modal:{},dmxDataTraversal:{},dmxBootstrap5Navigation:{},dmxValidator:{}}" -->
+<!-- Wappler include head-page="backoffice.html" is="dmx-app" id="projetos" appConnect="local" bootstrap5="local" capacitor="local" jquery_35="local" fontawesome_5="local" components="{dmxBootstrap5Modal:{},dmxDataTraversal:{},dmxBootstrap5Navigation:{},dmxValidator:{},dmxFormatter:{}}" -->
 
 <dmx-serverconnect id="apiListarStatus" url="http://localhost:8100/api/desktop/tarefas/listar-status" site="sfapis"></dmx-serverconnect>
 
@@ -187,13 +187,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
-                <form id="editarFormTarefas" is="dmx-serverconnect-form" method="post" action="http://localhost:8100/api/desktop/tarefas/atualizar-tarefas" site="sfapis" dmx-on:success="editarFormTarefas.reset();data_tarefas.select(0);apiListarTarefas.load({id: data_projeto.data.id});editarModalTarefas.hide();alertas.info('Tarefa atualizada com sucesso.')" dmx-on:error="editarFormTarefas.reset();data_tarefas.select(0);editarModalTarefas.hide();alertas.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response)">
+                <form method="post" action="http://localhost:8100/api/desktop/tarefas/atualizar-tarefas" site="sfapis" dmx-on:success="editarFormTarefas.reset();data_tarefas.select(0);apiListarTarefas.load({id: data_projeto.data.id});editarModalTarefas.hide();alertas.info('Tarefa atualizada com sucesso.')" dmx-on:error="editarFormTarefas.reset();data_tarefas.select(0);editarModalTarefas.hide();alertas.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response)" is="dmx-serverconnect-form" id="editarFormTarefas">
 
                     <div class="form-group">
-                        <input type="hidden" class="form-control" id="statusedit" name="statusedit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="selectStatusedit.selectedValue">
-                        <input type="hidden" class="form-control" id="responsaveledit" name="responsaveledit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="selectresponsaveledit.selectedValue">
-                        <input class="form-control" id="textostatusedit" name="textostatusedit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="selectStatusedit.selectedText" type="hidden">
-                        <input class="form-control" id="idtarefaedit" name="idtarefaedit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="data_projeto.data.id" type="hidden">
+                        <input class="form-control" id="statusedit" name="statusedit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="selectStatusedit.selectedValue">
+                        <input class="form-control" id="responsaveledit" name="responsaveledit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="selectresponsaveledit.selectedValue">
+                        <input class="form-control" id="textostatusedit" name="textostatusedit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="selectStatusedit.selectedText">
+                        <input class="form-control" id="idtarefaedit" name="idtarefaedit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="data_tarefas.data.id">
                     </div>
                     <div class="form-group mb-3">
                         <input type="text" class="form-control" id="titulotarefaedit" name="titulotarefaedit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="data_tarefas.data.titulo" required="" data-msg-required="Campo obrigatório.">
