@@ -437,6 +437,161 @@ dmx.config({
         }
       ],
       "outputType": "array"
+    },
+    "rpTarefa": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "datetime",
+          "name": "criado-em"
+        },
+        {
+          "type": "text",
+          "name": "titulo"
+        },
+        {
+          "type": "number",
+          "name": "criado-por"
+        },
+        {
+          "type": "text",
+          "name": "descricao-tarefa"
+        },
+        {
+          "type": "number",
+          "name": "status"
+        },
+        {
+          "type": "date",
+          "name": "data-inicio"
+        },
+        {
+          "type": "date",
+          "name": "data-fim"
+        },
+        {
+          "type": "number",
+          "name": "projeto"
+        },
+        {
+          "type": "number",
+          "name": "empresa"
+        },
+        {
+          "type": "number",
+          "name": "responsavel"
+        }
+      ],
+      "outputType": "array"
+    },
+    "rpTarefas": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "datetime",
+          "name": "criado-em"
+        },
+        {
+          "type": "text",
+          "name": "titulo"
+        },
+        {
+          "type": "number",
+          "name": "criado-por"
+        },
+        {
+          "type": "text",
+          "name": "descricao-tarefa"
+        },
+        {
+          "type": "number",
+          "name": "status"
+        },
+        {
+          "type": "date",
+          "name": "data-inicio"
+        },
+        {
+          "type": "date",
+          "name": "data-fim"
+        },
+        {
+          "type": "number",
+          "name": "projeto"
+        },
+        {
+          "type": "number",
+          "name": "empresa"
+        },
+        {
+          "type": "number",
+          "name": "responsavel"
+        },
+        {
+          "type": "text",
+          "name": "tarefa-status"
+        }
+      ],
+      "outputType": "array"
+    },
+    "data_tarefas": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "datetime",
+          "name": "criado-em"
+        },
+        {
+          "type": "text",
+          "name": "titulo"
+        },
+        {
+          "type": "number",
+          "name": "criado-por"
+        },
+        {
+          "type": "text",
+          "name": "descricao-tarefa"
+        },
+        {
+          "type": "number",
+          "name": "status"
+        },
+        {
+          "type": "date",
+          "name": "data-inicio"
+        },
+        {
+          "type": "date",
+          "name": "data-fim"
+        },
+        {
+          "type": "number",
+          "name": "projeto"
+        },
+        {
+          "type": "number",
+          "name": "empresa"
+        },
+        {
+          "type": "number",
+          "name": "responsavel"
+        },
+        {
+          "type": "text",
+          "name": "tarefa-status"
+        }
+      ],
+      "outputType": "array"
     }
   }
 });

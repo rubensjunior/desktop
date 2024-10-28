@@ -213,10 +213,10 @@
                     <div class="col" is="dmx-repeat" id="listaColaboradores" dmx-bind:repeat="apiListarColaboradores.data.queryListarColaboradores" key="id">
                         <div class="row gx-2 py-3 align-items-center border-bottom mx-0">
                             <div class="col-4 align-self-center p-0">
-                                <p class="p-1 m-0 txt-tab">{{nome}}</p>
+                                <p class="p-1 m-0 txt-tab f-size">{{nome}}</p>
                             </div>
                             <div class="col align-self-center p-0">
-                                <p class="p-1 m-0 txt-tab">{{email}}</p>
+                                <p class="p-1 m-0 txt-tab f-size">{{email}}</p>
                             </div>
                             <div class="col align-self-center p-0 text-center">
                                 <input class="form-check-input" type="checkbox" value="" id="input2" name="input2" dmx-bind:checked="isAtivo==1" readonly="true" disabled="true">
@@ -224,7 +224,7 @@
                             <div class="col align-self-center p-0">
                                 <div class="d-flex justify-content-end">
                                     <div class="dropdown">
-                                        <button id="editar" class="btn dropdown-toggle btn-sm btn-light txt-tab-button" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ações</button>
+                                        <button id="editar" class="btn dropdown-toggle btn-sm btn-light txt-tab-button \\" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ações</button>
                                         <div class="dropdown-menu" aria-labelledby="dropdown1">
                                             <button id="btn2" class="btn w-100 text-start" dmx-on:click="data_colaborador.select(id);edotarModalColaborador.show()" data-bs-target="#editarModal" type="submit">Editar</button>
                                         </div>
