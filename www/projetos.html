@@ -187,30 +187,30 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
-                <form method="post" action="http://localhost:8100/api/desktop/tarefas/atualizar-tarefas" site="sfapis" dmx-on:success="editarFormTarefas.reset();data_tarefas.select(0);apiListarTarefas.load({id: data_projeto.data.id});editarModalTarefas.hide();alertas.info('Tarefa atualizada com sucesso.')" dmx-on:error="editarFormTarefas.reset();data_tarefas.select(0);editarModalTarefas.hide();alertas.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response)" is="dmx-serverconnect-form" id="editarFormTarefas">
+                <form method="post" id="editarFormTarefa" is="dmx-serverconnect-form" action="http://localhost:8100/api/desktop/tarefas/atualizar-tarefas" site="sfapis" dmx-on:error="editarFormTarefa.reset();data_tarefas.select(0);editarModalTarefas.hide();alertas.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response)" dmx-on:success="editarFormTarefa.reset();data_tarefas.select(0);apiListarTarefas.load({id: data_projeto.data.id});editarModalTarefas.hide();alertas.info('Tarefa atualizada com sucesso.')">
 
                     <div class="form-group">
-                        <input class="form-control" id="statusedit" name="statusedit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="selectStatusedit.selectedValue">
-                        <input class="form-control" id="responsaveledit" name="responsaveledit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="selectresponsaveledit.selectedValue">
-                        <input class="form-control" id="textostatusedit" name="textostatusedit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="selectStatusedit.selectedText">
-                        <input class="form-control" id="idtarefaedit" name="idtarefaedit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="data_tarefas.data.id">
+                        <input class="form-control" id="statusedit" name="statusedit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="selectStatusedit.selectedValue" type="hidden">
+                        <input class="form-control" id="responsaveledit" name="responsaveledit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="selectresponsaveledit.selectedValue" type="hidden">
+                        <input class="form-control" id="textostatusedit" name="textostatusedit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="selectStatusedit.selectedText" type="hidden">
+                        <input class="form-control" id="idedit" name="idedit" aria-describedby="input1_help" dmx-bind:value="data_tarefas.data.id" type="hidden">
                     </div>
                     <div class="form-group mb-3">
-                        <input type="text" class="form-control" id="titulotarefaedit" name="titulotarefaedit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="data_tarefas.data.titulo" required="" data-msg-required="Campo obrigatório.">
+                        <input type="text" class="form-control" id="tituloedit" name="tituloedit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="data_tarefas.data.titulo" required="" data-msg-required="Campo obrigatório.">
                     </div>
 
                     <div class="form-group mb-3">
-                        <textarea id="descricaotarefaedit" class="form-control text-area" placeholder="Descrição da atividade" name="descricaotarefaedit" dmx-bind:value="data_tarefas.data['descricao-tarefa']" required="" data-msg-required="Campo obrigatório."></textarea>
+                        <textarea id="descricaoedit" class="form-control text-area" placeholder="Descrição da atividade" name="descricaoedit" dmx-bind:value="data_tarefas.data['descricao-tarefa']" required="" data-msg-required="Campo obrigatório."></textarea>
                     </div>
                     <div class="row">
                         <div class="col">
                             <div class="form-group mb-3">
-                                <input type="date" class="form-control" id="datainiciotarefaedit" name="datainiciotarefaedit" aria-describedby="input1_help" placeholder="Data de início" dmx-bind:value="data_tarefas.data['data-inicio']" required="" data-msg-required="Campo obrigatório.">
+                                <input type="date" class="form-control" id="datainicioedit" name="datainicioedit" aria-describedby="input1_help" placeholder="Data de início" dmx-bind:value="data_tarefas.data['data-inicio']" required="" data-msg-required="Campo obrigatório.">
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group mb-3">
-                                <input type="date" class="form-control" id="datafimtarefaedit" name="datafimtarefaedit" aria-describedby="input1_help" placeholder="Data de fim" dmx-bind:value="data_tarefas.data['data-fim']" required="" data-msg-required="Campo obrigatório.">
+                                <input type="date" class="form-control" id="datafimedit" name="datafimedit" aria-describedby="input1_help" placeholder="Data de fim" dmx-bind:value="data_tarefas.data['data-fim']" required="" data-msg-required="Campo obrigatório.">
                             </div>
                         </div>
                     </div>
@@ -234,13 +234,14 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" dmx-on:click="editarFormTarefas.reset();data_tarefas.select(0)">Cancelar</button>
-                <button type="button" class="btn btn-primary" dmx-on:click="editarFormTarefas.submit()">Atualizar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" dmx-on:click="data_tarefas.select(0);editarFormTarefa.reset()">Cancelar</button>
+                <button type="button" class="btn btn-primary" dmx-on:click="editarFormTarefa.submit()">Atualizar</button>
             </div>
         </div>
     </div>
 </div>
 <main>
+
 
 
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -294,7 +295,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid bg-white p-4 rounded-3 new-shadow">
+    <div class="container-fluid bg-white p-4 rounded-3 new-shadow mb-3">
         <div class="row pb-3 gx-0 align-items-center border-bottom mx-0 ps-0">
             <div class="col-6 align-self-center">
                 <h6 class="p-1 m-0 txt-tab-title">TAREFA</h6>
@@ -325,8 +326,8 @@
                         <div class="dropdown">
                             <button id="editar" class="btn dropdown-toggle btn-sm btn-light txt-tab-button" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ações</button>
                             <div class="dropdown-menu" aria-labelledby="dropdown1">
-                                <button id="btn6" class="btn w-100 text-start" dmx-on:click="data_tarefas.select(id);editarModalTarefas.show();apiListarMembrosTIme.load({times: data_projeto.data.times})" data-bs-target="#editarModal" type="submit">Editar</button>
-                                <button id="btn3" class="btn w-100 text-start" dmx-on:click="" data-bs-target="#editarModal" type="submit">Detalhes</button>
+                                <button id="btn6" class="btn w-100 text-start" dmx-on:click="data_tarefas.select(id);editarModalTarefas.show();apiListarMembrosTIme.load({times: data_projeto.data.times})" data-bs-target="#editarModal" type="submit" dmx-show="_['criado-por']==usuarioLogado.data.queryUsuario[0].id">Editar</button>
+                                <button id="btn3" class="btn w-100 text-start" data-bs-target="#editarModal" type="submit" dmx-on:click="data_tarefas.select(id)">Detalhes</button>
                             </div>
                         </div>
                     </div>
@@ -336,6 +337,16 @@
 
 
 
+        </div>
+    </div>
+    <div class="container-fluid bg-white p-4 rounded-3 new-shadow">
+        <div class="row">
+            <div class="col">
+                <div class="d-flex justify-content-between pb-3 border-bottom align-items-center">
+                    <h6 class="m-0">Detalhe tarefa: {{view1.data_tarefas.data.titulo}}</h6>
+                    <button id="btn4" class="btn btn-dark py-2">Criar nota</button>
+                </div>
+            </div>
         </div>
     </div>
 </main>
