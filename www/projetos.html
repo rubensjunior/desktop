@@ -1,4 +1,4 @@
-<!-- Wappler include head-page="backoffice.html" is="dmx-app" id="projetos" appConnect="local" bootstrap5="local" capacitor="local" jquery_35="local" fontawesome_5="local" components="{dmxBootstrap5Modal:{},dmxDataTraversal:{},dmxBootstrap5Navigation:{},dmxValidator:{},dmxFormatter:{},dmxDatePicker:{},dmxMoment:{}}" moment_2="cdn" -->
+<!-- Wappler include head-page="backoffice.html" is="dmx-app" id="projetos" appConnect="local" bootstrap5="local" capacitor="local" jquery_35="local" fontawesome_5="local" components="{dmxBootstrap5Modal:{},dmxDataTraversal:{},dmxBootstrap5Navigation:{},dmxValidator:{},dmxFormatter:{},dmxDatePicker:{},dmxMoment:{},dmxCalendar:{}}" moment_2="cdn" -->
 
 <dmx-datetime id="dataAtual" interval="days"></dmx-datetime>
 
@@ -337,7 +337,6 @@
             <div class="col px-0 border-top">
                 <div class="nav w-100 ps-0 py-1">
                     <a class="nav-item nav-link ps-0 text-black cursor" dmx-on:click="apiListarTarefas.load({id: view1.data_projeto.data.id})">Tarefas</a>
-                    <a class="nav-item nav-link text-black" href="#">Anexos</a>
                     <a class="nav-item nav-link text-black" href="#">Reuniões</a>
                 </div>
             </div>
@@ -409,7 +408,20 @@
     </div>
     <div class="container-fluid bg-white p-4 rounded-3 new-shadow">
         <div class="row">
-            <div class="col"></div>
+            <div class="col">
+                <div class="d-flex justify-content-between pb-3 border-bottom align-items-center">
+                    <h5>Reuniões</h5>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <dmx-calendar id="calendario" views="dayGridMonth,dayGridWeek,dayGridDay" theme="bootstrap5" locale="pt-br"></dmx-calendar>
+                    </div>
+                    <div class="col-6">
+                    </div>
+                </div>
+
+
+            </div>
         </div>
     </div>
 </main>
