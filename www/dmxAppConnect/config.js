@@ -592,6 +592,83 @@ dmx.config({
         }
       ],
       "outputType": "array"
+    },
+    "data_atividades": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "number",
+          "name": "projeto"
+        },
+        {
+          "type": "number",
+          "name": "tarefa"
+        },
+        {
+          "type": "text",
+          "name": "descricao-atividade"
+        },
+        {
+          "type": "date",
+          "name": "criadoem"
+        },
+        {
+          "type": "number",
+          "name": "criadopor"
+        },
+        {
+          "type": "number",
+          "name": "tipo"
+        }
+      ],
+      "outputType": "array"
+    },
+    "rpNotasAtividades": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "number",
+          "name": "projeto"
+        },
+        {
+          "type": "number",
+          "name": "tarefa"
+        },
+        {
+          "type": "text",
+          "name": "descricao-atividade"
+        },
+        {
+          "type": "date",
+          "name": "criadoem"
+        },
+        {
+          "type": "number",
+          "name": "criadopor"
+        },
+        {
+          "type": "number",
+          "name": "tipo"
+        },
+        {
+          "type": "text",
+          "name": "link"
+        },
+        {
+          "type": "date",
+          "name": "data-reuniao"
+        }
+      ],
+      "outputType": "array"
+    },
+    "data": {
+      "outputType": "text"
     }
   }
 });

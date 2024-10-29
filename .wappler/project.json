@@ -26,6 +26,10 @@
     {
       "name": "fontawesome_5",
       "type": "local"
+    },
+    {
+      "name": "moment_2",
+      "type": "local with locales"
     }
   ],
   "runtime": "capacitor",

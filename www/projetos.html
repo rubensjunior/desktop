@@ -1,4 +1,10 @@
-<!-- Wappler include head-page="backoffice.html" is="dmx-app" id="projetos" appConnect="local" bootstrap5="local" capacitor="local" jquery_35="local" fontawesome_5="local" components="{dmxBootstrap5Modal:{},dmxDataTraversal:{},dmxBootstrap5Navigation:{},dmxValidator:{},dmxFormatter:{}}" -->
+<!-- Wappler include head-page="backoffice.html" is="dmx-app" id="projetos" appConnect="local" bootstrap5="local" capacitor="local" jquery_35="local" fontawesome_5="local" components="{dmxBootstrap5Modal:{},dmxDataTraversal:{},dmxBootstrap5Navigation:{},dmxValidator:{},dmxFormatter:{},dmxDatePicker:{},dmxMoment:{}}" moment_2="cdn" -->
+
+<dmx-datetime id="dataAtual" interval="days"></dmx-datetime>
+
+
+<dmx-serverconnect id="apiListarAtividades" noload="true" url="http://localhost:8100/api/desktop/atividades/listar-atividade" site="sfapis"></dmx-serverconnect>
+<dmx-serverconnect id="apiListarTiposAtividades" url="http://localhost:8100/api/desktop/atividades/listar-tipos" site="sfapis"></dmx-serverconnect>
 
 <dmx-serverconnect id="apiListarStatus" url="http://localhost:8100/api/desktop/tarefas/listar-status" site="sfapis"></dmx-serverconnect>
 
@@ -9,6 +15,8 @@
 <dmx-serverconnect id="apiListarMembrosTIme" noload="true" url="http://localhost:8100/api/desktop/times/listar-membros-time" site="sfapis" dmx-param:times="criarModalProjeto.criarFormProjeto.times.selectedValue"></dmx-serverconnect>
 <dmx-data-detail id="data_projeto" dmx-bind:data="apiListarProjetos.data.queryListarProjetos" key="id"></dmx-data-detail>
 <dmx-data-detail id="data_tarefas" dmx-bind:data="apiListarTarefas.data.queryTarefas" key="id"></dmx-data-detail>
+<dmx-data-detail id="data_atividades" dmx-bind:data="apiListarAtividades.data.queryAtividades" key="id"></dmx-data-detail>
+
 <div class="modal" id="criarModalProjeto" is="dmx-bs5-modal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -240,6 +248,46 @@
         </div>
     </div>
 </div>
+<div class="modal" id="criarModalAtividade" is="dmx-bs5-modal" tabindex="-1">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Criar nota</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-3">
+                <form id="criarFormAtividade" is="dmx-serverconnect-form" method="post" action="http://localhost:8100/api/desktop/atividades/criar-atividade" site="sfapis" dmx-on:error="criarFormAtividade.reset();criarModalAtividade.hide();alertas.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response)" dmx-on:success="criarFormAtividade.reset();apiListarAtividades.load({id: data_tarefas.data.id});criarModalAtividade.hide();alertas.success('Cadastro realizado com sucesso!')">
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" id="atvprojeto" name="atvprojeto" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="data_tarefas.data.projeto">
+                        <input type="hidden" class="form-control" id="atvtarefa" name="atvtarefa" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="data_tarefas.data.id">
+                        <input type="hidden" class="form-control" id="atvcriadopor" name="atvcriadopor" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="usuarioLogado.data.queryUsuario[0].id">
+                        <input type="hidden" class="form-control" id="atvtipo" name="atvtipo" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="selectTipoNota.selectedValue">
+                    </div>
+                    <div class="form-group mb-3">
+                        <select id="selectTipoNota" class="form-select" dmx-bind:options="apiListarTiposAtividades.data.queryTiposAtividades" optiontext="tipo" optionvalue="id" required="" data-msg-required="Este é um campo obrigatório.">
+                            <option selected="" value="null" disabled>Selecione o tipo de nota</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group mb-3">
+                        <textarea id="atvdescricao" class="form-control text-area" placeholder="Insira o comentário da nota." required="" data-msg-required="Este é um campo obrigatório." name="atvdescricao"></textarea>
+                    </div>
+                    <div class="form-group mb-3" dmx-show="selectTipoNota.selectedValue==2">
+                        <input type="text" class="form-control" id="atvlink" name="atvlink" aria-describedby="input1_help" placeholder="Link do documento">
+                    </div>
+                    <div class="form-group" dmx-show="selectTipoNota.selectedValue==3">
+                        <input id="atvdata" name="atvdata" type="date" class="form-control" dmx-bind:value="dataAtual.datetime.formatDate('yyyy-MM-01')">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" dmx-on:click="criarFormAtividade.reset()">Cancelar</button>
+                <button type="button" class="btn btn-primary" dmx-on:click="criarFormAtividade.submit()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <main>
 
 
@@ -282,7 +330,7 @@
                 <p>{{view1.data_projeto.data['descricao-projeto']}}</p>
             </div>
             <div class="col text-end align-self-center">
-                <button id="btn2" class="btn btn-dark py-2" data-bs-toggle="modal" data-bs-target="#criarModalTarefas" dmx-on:click="apiListarMembrosTIme.load({times: data_projeto.data.times})">Criar tarefas</button>
+                <button id="btn2" class="btn btn-dark py-2 btn-sm" data-bs-toggle="modal" data-bs-target="#criarModalTarefas" dmx-on:click="apiListarMembrosTIme.load({times: data_projeto.data.times})">Criar tarefas</button>
             </div>
         </div>
         <div class="row mx-0 mt-2">
@@ -327,7 +375,7 @@
                             <button id="editar" class="btn dropdown-toggle btn-sm btn-light txt-tab-button" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ações</button>
                             <div class="dropdown-menu" aria-labelledby="dropdown1">
                                 <button id="btn6" class="btn w-100 text-start" dmx-on:click="data_tarefas.select(id);editarModalTarefas.show();apiListarMembrosTIme.load({times: data_projeto.data.times})" data-bs-target="#editarModal" type="submit" dmx-show="_['criado-por']==usuarioLogado.data.queryUsuario[0].id">Editar</button>
-                                <button id="btn3" class="btn w-100 text-start" data-bs-target="#editarModal" type="submit" dmx-on:click="data_tarefas.select(id)">Detalhes</button>
+                                <button id="btn3" class="btn w-100 text-start" data-bs-target="#editarModal" type="submit" dmx-on:click="run([{run:{name:'tarefa',outputType:'text',action:`data_tarefas.select(id)`}},{wait:{delay:600}},{run:{name:'listagem',outputType:'text',action:`apiListarAtividades.load({id: data_tarefas.data.id})`}}])">Atividades</button>
                             </div>
                         </div>
                     </div>
@@ -339,14 +387,29 @@
 
         </div>
     </div>
-    <div class="container-fluid bg-white p-4 rounded-3 new-shadow">
+    <div class="container-fluid bg-white p-4 rounded-3 new-shadow mb-3">
         <div class="row">
             <div class="col">
                 <div class="d-flex justify-content-between pb-3 border-bottom align-items-center">
                     <h6 class="m-0">Detalhe tarefa: {{view1.data_tarefas.data.titulo}}</h6>
-                    <button id="btn4" class="btn btn-dark py-2">Criar nota</button>
+                    <button id="btn4" class="btn btn-dark py-2 btn-sm" data-bs-toggle="modal" data-bs-target="#criarModalAtividade">Adicionar nota</button>
                 </div>
+                <div class="row m-0">
+                    <div class="col">
+                        <div class="row" is="dmx-repeat" id="rpNotasAtividades" dmx-bind:repeat="apiListarAtividades.data.queryAtividades" key="id">
+                            <div class="col-12 align-self-center py-3 border-bottom">
+                                <p class="m-0">{{_['descricao-atividade']}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+        </div>
+    </div>
+    <div class="container-fluid bg-white p-4 rounded-3 new-shadow">
+        <div class="row">
+            <div class="col"></div>
         </div>
     </div>
 </main>
