@@ -5,18 +5,27 @@ html, body {
   overflow: hidden; /* Impede o scroll vertical */
 }
 body {  
-  background: radial-gradient(circle at center top, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.8) 40%, rgba(201, 209, 217, 0.8) 100%);
-  background-color: #f9f9f9; /* Cor de fundo */
+  /*background: radial-gradient(circle at center top, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.8) 40%, rgba(201, 209, 217, 0.8) 100%);*/
+  background-color: #0F1014; /* Cor de fundo */
   background-size: cover;
   background-repeat: no-repeat;
   min-height: 100%;
+  color: #fff;
 }
 .sideblack{
     background-color: black;
 }
-
+.bg-container{
+    background-color: #15171c;
+}
+.bg-drop{
+    background-color: #1C1D22;
+}
 .form-control, .form-select{
     height: 46px;
+    background-color: #1b1c22;
+    color: #fff;
+    border: none;
 }
 
 .form-label{
@@ -50,7 +59,7 @@ body {
     cursor: pointer;
 }
 .icon{
-    opacity: 0.35;
+    opacity: 0.65;
     height: 18px;
     width: 18px;
 }
@@ -58,7 +67,7 @@ body {
     font-weight: 500;
 }
 .f-color{
-    color: #78829d;
+    color: #fff;
 }
 .sub-title{
     font-size: 13px;
@@ -112,4 +121,49 @@ border-radius: 24px;
 }
 .f-size{
     font-size: 14px;
+}
+.form-check-input:checked{
+color: orangered;
+background-color: orangered;
+border: none;
+}
+.form-check-input{
+    color: orangered;
+}
+
+/* Aplica a cor para todos os placeholders em elementos de formulário */
+.form-control::-webkit-input-placeholder {
+    color: #888888 !important; /* Define a cor desejada */
+    opacity: 1; /* Garante visibilidade total */
+}
+.form-control::-moz-placeholder {
+    color: #888888 !important; /* Define a cor desejada */
+    opacity: 1; /* Garante visibilidade total */
+}
+.form-control:-ms-input-placeholder {
+    color: #888888 !important; /* Define a cor desejada */
+    opacity: 1; /* Garante visibilidade total */
+}
+.form-control::-ms-input-placeholder {
+    color: #888888 !important; /* Define a cor desejada */
+    opacity: 1; /* Garante visibilidade total */
+}
+.form-control::placeholder {
+    color: #888888 !important; /* Define a cor desejada */
+    opacity: 1; /* Garante visibilidade total */
+}
+.item-nota{
+    background-color: #0d6dfd17;
+    border-radius: 6px;
+    border: solid 1px #0d6efd;
+}
+.item-documento{
+    background-color: rgba(255, 68, 0, 0.073);
+    border-radius: 6px;
+    border: solid 1px orangered;
+}
+.item-reuniao{
+    background-color: #70e0001d;
+    border-radius: 6px;
+    border: solid 1px #70e000;
 }

@@ -53,7 +53,7 @@
 			<div class="col-12 col-sm-6 col-md-6">
 				<div class="row h-100 justify-content-center">
 					<div class="col-8 align-self-center text-center">
-						<img src="assets/images/spacefeed-black.png" height="42" class="mb-5">
+						<img src="assets/images/spacefeed-white.png" height="42" class="mb-5">
 						<form id="login" is="dmx-serverconnect-form" method="post" action="http://localhost:8100/api/desktop/auth/login" site="sfapis" credentials="true" dmx-on:error="login.reset();toasts.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response)" dmx-on:unauthorized="login.reset();toasts.warning('Login ou senha errados.')" dmx-on:success="identificacao.set('usuario',login.data.identity);login.reset();toasts.success('Seja bem-vindo!');browser1.goto('backoffice.html')">
 							<div class="form-group mb-3">
 								<input type="email" class="form-control" id="email" name="email" aria-describedby="input1_help" placeholder="Seu e-mail cadastrado">
@@ -62,10 +62,10 @@
 								<input class="form-control" id="senha" name="senha" aria-describedby="input1_help" placeholder="Sua senha" type="password">
 							</div>
 							<div class="form-group mb-3">
-								<button id="btn1" class="btn btn-dark w-100 new-button" type="submit">Fazer login</button>
+								<button id="btn1" class="btn w-100 new-button btn-primary" type="submit">Fazer login</button>
 							</div>
 							<div class="form-group mb-3 text-center">
-								<small id="input1_help2" class="form-text text-muted">Para recuperar sua senha clique aqui - {{identificacao.data.usuario}}</small>
+								<small id="input1_help2" class="form-text text-white">Para recuperar sua senha clique aqui</small>
 							</div>
 
 						</form>
