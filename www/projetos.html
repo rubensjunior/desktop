@@ -1,5 +1,11 @@
 <!-- Wappler include head-page="backoffice.html" is="dmx-app" id="projetos" appConnect="local" bootstrap5="local" capacitor="local" jquery_35="local" fontawesome_5="local" components="{dmxBootstrap5Modal:{},dmxDataTraversal:{},dmxBootstrap5Navigation:{},dmxValidator:{},dmxFormatter:{},dmxDatePicker:{},dmxMoment:{},dmxCalendar:{}}" moment_2="cdn" -->
+
+
 <dmx-value id="projeto" dmx-bind:value="0"></dmx-value>
+<dmx-value id="tarefas" dmx-bind:value="0"></dmx-value>
+
+<dmx-value id="detalhes"></dmx-value>
+<dmx-value id="reuniao" dmx-bind:value="0"></dmx-value>
 <dmx-datetime id="dataAtual" interval="days"></dmx-datetime>
 <dmx-serverconnect id="apiListarKanbanTarefas" noload="true" url="http://localhost:8100/api/desktop/tarefas/listar-kanban" site="sfapis"></dmx-serverconnect>
 <dmx-serverconnect id="apiListarReunioes" noload="true" url="http://localhost:8100/api/desktop/atividades/listar-reunioes" site="sfapis"></dmx-serverconnect>
@@ -288,13 +294,13 @@
     </div>
 </div>
 <main>
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-3" dmx-show="view1.projeto.value==0">
         <div class="d-flex">
             <h4 class=" m-0">Projetos<small class="sub-title">Gestão de projetos e tarefas</small>
             </h4>
         </div><button id="btn7" class="btn py-2 btn-primary" data-bs-toggle="modal" data-bs-target="#criarModalProjeto">Criar novo</button>
     </div>
-    <div class="container-fluid px-0">
+    <div class="container-fluid px-0" dmx-show="view1.projeto.value==0">
         <div class="row px-1" id="rpProjetos" is="dmx-repeat" dmx-bind:repeat="apiListarProjetos.data.queryListarProjetos" key="id">
             <div class=" col-4 px-2 pb-3">
                 <div class="row p-0 m-0">
@@ -306,7 +312,7 @@
                         <h5>{{_['nome-projeto']}}</h5>
                         <p class="txt-tab text-start f-color">{{_['descricao-projeto']}}</p>
                         <div class="d-flex flex-row justify-content-between mb-3">
-                            <button id="btn1" class="btn btn-dark" dmx-on:click="data_projeto.select(id);apiListarTarefas.load({idprojeto: id});apiListarReunioes.load({idprojeto: id});apiListarKanbanTarefas.load({idprojeto: id})">Detalhes do projeto</button>
+                            <button id="btn1" class="btn btn-dark" dmx-on:click="data_projeto.select(id);apiListarTarefas.load({idprojeto: id});apiListarReunioes.load({idprojeto: id});apiListarKanbanTarefas.load({idprojeto: id});projeto.setValue(1);tarefas.setValue(1)">Detalhes do projeto</button>
                         </div>
                     </div>
                 </div>
@@ -314,7 +320,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid bg-container px-4 pt-4 rounded-3 border border-dark mb-3">
+    <div class="container-fluid bg-container px-4 pt-4 rounded-3 border border-dark mb-3" dmx-show="view1.projeto.value==1">
         <div class="row">
             <div class="col">
                 <div class="d-flex mb-3">
@@ -336,7 +342,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">
+    <div class="container-fluid" dmx-show="view1.tarefas.value==1">
         <div class="row " is="dmx-repeat" id="rpKanban" dmx-bind:repeat="apiListarKanbanTarefas.data.repeat" key="id">
             <div class="col-3">
                 <div class="d-flex text-center align-items-center pb-3 border-bottom mb-3">
@@ -353,7 +359,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid bg-container p-4 rounded-3 mb-3 border border-dark">
+    <div class="container-fluid bg-container p-4 rounded-3 mb-3 border border-dark" dmx-show="view1.tarefas.value==2">
         <div class="row pb-3 gx-0 align-items-center border-bottom mx-0 ps-0 border-dark">
             <div class="col-6 align-self-center">
                 <h6 class="p-1 m-0 txt-tab-title">TAREFA</h6>
@@ -393,7 +399,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid bg-container p-4 rounded-3 border border-dark mb-3">
+    <div class="container-fluid bg-container p-4 rounded-3 border border-dark mb-3" dmx-show="view1.detalhes.value==1">
         <div class="row">
             <div class="col">
                 <div class="d-flex justify-content-between pb-3 align-items-center">
@@ -419,7 +425,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid bg-container p-4 rounded-3 border border-dark mb-4">
+    <div class="container-fluid bg-container p-4 rounded-3 border border-dark mb-4" dmx-show="view1.reuniao.value==1">
         <div class="row">
             <div class="col">
                 <div class="d-flex justify-content-between pb-3 border-bottom align-items-center mb-3 border-dark">
