@@ -1,4 +1,18 @@
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path opacity="0.3" d="M2 21V14C2 13.4 2.4 13 3 13H21C21.6 13 22 13.4 22 14V21C22 21.6 21.6 22 21 22H3C2.4 22 2 21.6 2 21Z" fill="currentColor"/>
-<path d="M2 10V3C2 2.4 2.4 2 3 2H21C21.6 2 22 2.4 22 3V10C22 10.6 21.6 11 21 11H3C2.4 11 2 10.6 2 10Z" fill="currentColor"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Camada_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 24 24">
+  <!-- Generator: Adobe Illustrator 29.0.0, SVG Export Plug-In . SVG Version: 2.1.0 Build 186)  -->
+  <defs>
+    <style>
+      .st0, .st1 {
+        fill: #fff;
+      }
+
+      .st1 {
+        isolation: isolate;
+        opacity: .3;
+      }
+    </style>
+  </defs>
+  <path class="st1" d="M2,21v-7c0-.6.4-1,1-1h18c.6,0,1,.4,1,1v7c0,.6-.4,1-1,1H3c-.6,0-1-.4-1-1Z"/>
+  <path class="st0" d="M2,10V3c0-.6.4-1,1-1h18c.6,0,1,.4,1,1v7c0,.6-.4,1-1,1H3c-.6,0-1-.4-1-1Z"/>
 </svg>
