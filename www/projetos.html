@@ -1,12 +1,14 @@
 <!-- Wappler include head-page="backoffice.html" is="dmx-app" id="projetos" appConnect="local" bootstrap5="local" capacitor="local" jquery_35="local" fontawesome_5="local" components="{dmxBootstrap5Modal:{},dmxDataTraversal:{},dmxBootstrap5Navigation:{},dmxValidator:{},dmxFormatter:{},dmxDatePicker:{},dmxMoment:{},dmxCalendar:{}}" moment_2="cdn" -->
 
 
+
 <dmx-value id="projeto" dmx-bind:value="0"></dmx-value>
 <dmx-value id="tarefas" dmx-bind:value="0"></dmx-value>
 
 <dmx-value id="detalhes"></dmx-value>
 <dmx-value id="reuniao" dmx-bind:value="0"></dmx-value>
 <dmx-datetime id="dataAtual" interval="days"></dmx-datetime>
+<dmx-serverconnect id="apiAtializarStatusKanban" url="http://localhost:8100/api/desktop/tarefas/atualizar-status-kanban" site="sfapis"></dmx-serverconnect>
 <dmx-serverconnect id="apiListarKanbanTarefas" noload="true" url="http://localhost:8100/api/desktop/tarefas/listar-kanban" site="sfapis"></dmx-serverconnect>
 <dmx-serverconnect id="apiListarReunioes" noload="true" url="http://localhost:8100/api/desktop/atividades/listar-reunioes" site="sfapis"></dmx-serverconnect>
 
@@ -22,7 +24,7 @@
 
 <dmx-serverconnect id="apiListarProjetos" url="http://localhost:8100/api/desktop/projetos/listar-projetos" site="sfapis" dmx-param:empresa="usuarioLogado.data.queryUsuario[0].empresa"></dmx-serverconnect>
 <dmx-serverconnect id="apiListarTimes" url="http://localhost:8100/api/desktop/times/listar-times" site="sfapis" dmx-param:empresa="usuarioLogado.data.queryUsuario[0].empresa"></dmx-serverconnect>
-<dmx-serverconnect id="apiListarMembrosTIme" noload="true" url="http://localhost:8100/api/desktop/times/listar-membros-time" site="sfapis" dmx-param:times="criarModalProjeto.criarFormProjeto.times.selectedValue"></dmx-serverconnect>
+<dmx-serverconnect id="apiListarMembrosTIme" noload="true" url="http://localhost:8100/api/desktop/times/listar-membros-time" site="sfapis" dmx-param:times=""></dmx-serverconnect>
 <dmx-data-detail id="data_projeto" dmx-bind:data="apiListarProjetos.data.queryListarProjetos" key="id"></dmx-data-detail>
 <dmx-data-detail id="data_tarefas" dmx-bind:data="apiListarTarefas.data.queryTarefas" key="id"></dmx-data-detail>
 <dmx-data-detail id="data_atividades" dmx-bind:data="apiListarAtividades.data.queryAtividades" key="id"></dmx-data-detail>
@@ -58,7 +60,7 @@
                         </div>
                         <div class="col">
                             <div class="form-group mb-3">
-                                <select id="responsavelSelect" class="form-select" name="responsavelSelect" dmx-bind:options="apiListarMembrosTIme.data.queryListarMembrosTime" optiontext="nome" optionvalue="membro" required="" data-msg-required="Campo obrigatório.">
+                                <select id="responsavelSelect" class="form-select" name="responsavelSelect" dmx-bind:options="apiListarMembrosTIme.data.queryListarMembrosTime" required="" data-msg-required="Campo obrigatório." optiontext="nome" optionvalue="membro">
                                     <option selected="" value="null" disabled>Selecione o responsável</option>
                                 </select>
                             </div>
@@ -85,7 +87,7 @@
 
 
                     <div class="form-group">
-                        <input class="form-control" id="editid" name="editid" aria-describedby="input1_help" placeholder="Nome do projeto" dmx-bind:value="data_projeto.data.id" type="hidden">
+                        <input class="form-control" id="editid" name="editid" aria-describedby="input1_help" placeholder="Nome do projeto" dmx-bind:value="apiListarMembrosTIme.data.queryListarMembrosTime[0].id" type="hidden">
                         <input class="form-control" id="edittimes" name="edittimes" aria-describedby="input1_help" placeholder="Nome do projeto" dmx-bind:value="timeSelect1.selectedValue" type="hidden">
                         <input class="form-control" id="editresponsavel" name="editresponsavel" aria-describedby="input1_help" placeholder="Nome do projeto" dmx-bind:value="responsavelSelect1.selectedValue" type="hidden">
                         <input class="form-control" id="ativo" name="ativo" aria-describedby="input1_help" placeholder="Nome do projeto" dmx-bind:value="ativo1.value" type="hidden">
@@ -100,7 +102,7 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group mb-3">
-                                <select id="timeSelect1" class="form-select" name="timeSelect1" dmx-bind:options="apiListarTimes.data.queryTimes" optiontext="nome" optionvalue="id" dmx-on:changed="apiListarMembrosTIme.load({times: selectedValue})" dmx-bind:value="data_projeto.data.times" required="" data-msg-required="Campo obrigatório.">
+                                <select id="timeSelect1" class="form-select" name="timeSelect1" dmx-bind:options="apiListarTimes.data.queryTimes" optiontext="nome" optionvalue="id" dmx-bind:value="data_projeto.data.times" required="" data-msg-required="Campo obrigatório.">
                                     <option selected="" value="null" disabled="">Selecione um time</option>
                                 </select>
                             </div>
@@ -201,30 +203,30 @@
                 <h5 class="modal-title">Editar tarefa</h5>
             </div>
             <div class="modal-body p-4 bg-container">
-                <form method="post" id="editarFormTarefa" is="dmx-serverconnect-form" action="http://localhost:8100/api/desktop/tarefas/atualizar-tarefas" site="sfapis" dmx-on:error="editarFormTarefa.reset();data_tarefas.select(0);editarModalTarefas.hide();alertas.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response)" dmx-on:success="editarFormTarefa.reset();data_tarefas.select(0);apiListarTarefas.load({id: data_projeto.data.id});editarModalTarefas.hide();alertas.info('Tarefa atualizada com sucesso.')">
+                <form method="post" id="editarFormTarefa" is="dmx-serverconnect-form" action="http://localhost:8100/api/desktop/tarefas/atualizar-tarefas" site="sfapis" dmx-on:error="editarFormTarefa.reset();data_tarefas.select(0);editarModalTarefas.hide();alertas.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response)" dmx-on:success="run([{run:{outputType:'text',action:`editarFormTarefa.reset()`}},{run:{outputType:'text',action:`data_tarefas.select(0)`}},{run:{outputType:'text',action:`apiListarTarefas.load({idprojeto: data_projeto.data.id})`}},{wait:{delay:200}},{run:{outputType:'text',action:`apiListarKanbanTarefas.load({idprojeto: data_projeto.data.id})`}},{run:{outputType:'text',action:`editarModalTarefas.hide()`}},{run:{outputType:'text',action:`alertas.info(\'Tarefa atualizada com sucesso!\')`}}])">
 
                     <div class="form-group">
-                        <input class="form-control" id="statusedit" name="statusedit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="selectStatusedit.selectedValue" type="hidden">
-                        <input class="form-control" id="responsaveledit" name="responsaveledit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="selectresponsaveledit.selectedValue" type="hidden">
-                        <input class="form-control" id="textostatusedit" name="textostatusedit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="selectStatusedit.selectedText" type="hidden">
-                        <input class="form-control" id="idedit" name="idedit" aria-describedby="input1_help" dmx-bind:value="data_tarefas.data.id" type="hidden">
+                        <input class="form-control" id="statusedit" name="statusedit" aria-describedby="input1_help" dmx-bind:value="selectStatusedit.selectedValue">
+                        <input class="form-control" id="responsaveledit" name="responsaveledit" aria-describedby="input1_help" dmx-bind:value="data_tarefas.data.responsavel">
+                        <input class="form-control" id="textostatusedit" name="textostatusedit" aria-describedby="input1_help" dmx-bind:value="selectStatusedit.selectedText">
+                        <input class="form-control" id="idtarefaedit" name="idtarefaedit" aria-describedby="input1_help" dmx-bind:value="data_tarefas.data.id">
                     </div>
                     <div class="form-group mb-3">
-                        <input type="text" class="form-control" id="tituloedit" name="tituloedit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="data_tarefas.data.titulo" required="" data-msg-required="Campo obrigatório.">
+                        <input type="text" class="form-control" id="titulotarefaedit" name="titulotarefaedit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="data_tarefas.data.titulo" required="" data-msg-required="Campo obrigatório.">
                     </div>
 
                     <div class="form-group mb-3">
-                        <textarea id="descricaoedit" class="form-control text-area" placeholder="Descrição da atividade" name="descricaoedit" dmx-bind:value="data_tarefas.data['descricao-tarefa']" required="" data-msg-required="Campo obrigatório."></textarea>
+                        <textarea id="descricaotarefaedit" class="form-control text-area" placeholder="Descrição da atividade" name="descricaotarefaedit" dmx-bind:value="data_tarefas.data['descricao-tarefa']" required="" data-msg-required="Campo obrigatório."></textarea>
                     </div>
                     <div class="row">
                         <div class="col">
                             <div class="form-group mb-3">
-                                <input type="date" class="form-control" id="datainicioedit" name="datainicioedit" aria-describedby="input1_help" placeholder="Data de início" dmx-bind:value="data_tarefas.data['data-inicio']" required="" data-msg-required="Campo obrigatório.">
+                                <input type="date" class="form-control" id="datainiciotarefaedit" name="datainiciotarefaedit" aria-describedby="input1_help" placeholder="Data de início" dmx-bind:value="data_tarefas.data['data-inicio']" required="" data-msg-required="Campo obrigatório.">
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-group mb-3">
-                                <input type="date" class="form-control" id="datafimedit" name="datafimedit" aria-describedby="input1_help" placeholder="Data de fim" dmx-bind:value="data_tarefas.data['data-fim']" required="" data-msg-required="Campo obrigatório.">
+                                <input type="date" class="form-control" id="datafimtarefaedit" name="datafimtarefaedit" aria-describedby="input1_help" placeholder="Data de fim" dmx-bind:value="data_tarefas.data['data-fim']" required="" data-msg-required="Campo obrigatório.">
                             </div>
                         </div>
                     </div>
@@ -232,7 +234,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <select id="selectStatusedit" class="form-select" dmx-bind:options="apiListarStatus.data.queryStatus" optiontext="status" optionvalue="id" dmx-bind:value="data_tarefas.data.status" required="" data-msg-required="Campo obrigatório.">
-                                    <option value="1">Escolha um status</option>
+                                    <option value="">Escolha um status</option>
                                 </select>
                             </div>
                         </div>
@@ -307,12 +309,12 @@
                     <div class="col bg-container p-4 rounded-3 border border-dark">
                         <div class="d-flex flex-row justify-content-between mb-3">
                             <p class="btn-txt-min text-start m-0">{{nome}}</p>
-                            <img src="assets/duotune/general/gen055.svg" width="22" class="icon cursor" dmx-on:click="data_projeto.select(id);apiListarMembrosTIme.load({times: times});editarModalProjeto.show()">
+                            <img src="assets/duotune/general/gen055.svg" width="22" class="icon cursor" dmx-on:click="run([{run:{outputType:'text',action:`data_projeto.select(id)`}},{wait:{delay:200}},{run:{outputType:'text',action:`apiListarMembrosTIme.load({times: times})`}},{run:{outputType:'text',action:`editarModalProjeto.show()`}}])">
                         </div>
                         <h5>{{_['nome-projeto']}}</h5>
                         <p class="txt-tab text-start f-color">{{_['descricao-projeto']}}</p>
                         <div class="d-flex flex-row justify-content-between mb-3">
-                            <button id="btn1" class="btn btn-dark" dmx-on:click="data_projeto.select(id);apiListarTarefas.load({idprojeto: id});apiListarReunioes.load({idprojeto: id});apiListarKanbanTarefas.load({idprojeto: id});projeto.setValue(1);tarefas.setValue(1)">Detalhes do projeto</button>
+                            <button id="btn1" class="btn btn-dark" dmx-on:click="run([{run:{outputType:'text',action:`data_projeto.select(id)`}},{wait:{delay:200}},{run:{outputType:'text',action:`apiListarTarefas.load({idprojeto: id})`}},{wait:{delay:200}},{run:{outputType:'text',action:`apiListarReunioes.load({idprojeto: id})`}},{wait:{delay:200}},{run:{outputType:'text',action:`apiListarKanbanTarefas.load({idprojeto: id})`}},{run:{outputType:'text',action:`projeto.setValue(1)`}},{run:{outputType:'text',action:`tarefas.setValue(1)`}}])">Detalhes do projeto</button>
                         </div>
                     </div>
                 </div>
@@ -373,20 +375,18 @@
                         <div class="col-12 bg-container p-4 rounded-3 border border-dark  mb-3">
                             <div class="d-flex flex-row justify-content-between mb-3">
                                 <p class="card-mini-title text-start m-0">Responsável</p>
-                                <img src="assets/duotune/general/gen055.svg" width="22" class="icon cursor" dmx-on:click="data_projeto.select(id);apiListarMembrosTIme.load({times: times});editarModalProjeto.show()">
+                                <img src="assets/duotune/general/gen055.svg" width="22" class="icon cursor" dmx-on:click="run([{run:{outputType:'text',action:`apiListarMembrosTIme.load({times: data_projeto.data.times})`}},{wait:{delay:200}},{run:{outputType:'text',action:`data_tarefas.select(id)`}},{wait:{delay:200}},{run:{outputType:'text',action:`criarModalTarefas.show()`}}])">
                             </div>
                             <h5>{{titulo}}</h5>
                             <p>{{_['descricao-tarefa']}}</p>
-                            <div class="d-flex border-top pt-3 border-dark w-100 flex-row">
-                                <div class="dropdown">
-                                    <button id="dropdown1" class="btn dropdown-toggle btn-sm txt-tab-button btn-dark w-100" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Status</button>
-                                    <div class="dropdown-menu bg-drop" aria-labelledby="dropdown1">
-                                        <a class="dropdown-item text-white" href="#">A fazer</a>
-                                        <a class="dropdown-item text-white" href="#">Em andamento</a>
-                                        <a class="dropdown-item text-white" href="#">Concluído</a>
-                                        <a class="dropdown-item text-white" href="#">Cancelado</a>
-                                    </div>
-                                </div>
+                            <div class="d-flex border-top pt-3 border-dark w-100 flex-row justify-content-start">
+                                <select id="select1" class="btn dropdown-toggle btn-sm txt-tab-button btn-dark" dmx-bind:value="status" name="text-start" dmx-on:changed="run([{run:{outputType:'text',action:`apiAtializarStatusKanban.load({idtarefakanban: id, statusidtarefakanban: selectedValue, statustextotarefakanban: selectedText})`}},{wait:{delay:200}},{run:{outputType:'text',action:`apiListarKanbanTarefas.load({idprojeto: data_projeto.data.id})`}},{wait:{delay:200}},{run:{outputType:'text',action:`apiListarTarefas.load({idprojeto: data_projeto.data.id})`}}])">
+                                    <option value="1">A Fazer</option>
+                                    <option value="2">Em Andamento</option>
+                                    <option value="3">Cancelado</option>
+                                    <option value="4">Concluído</option>
+                                </select>
+
                             </div>
                         </div>
                     </div>
@@ -425,7 +425,7 @@
                         <div class="dropdown">
                             <button id="editar1" class="btn dropdown-toggle btn-sm txt-tab-button btn-dark" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ações</button>
                             <div class="dropdown-menu bg-drop" aria-labelledby="dropdown1">
-                                <button id="btn5" class="btn w-100 text-start text-white" dmx-on:click="data_tarefas.select(id);editarModalTarefas.show();apiListarMembrosTIme.load({times: data_projeto.data.times})" data-bs-target="#editarModal" type="submit" dmx-show="_['criado-por']==usuarioLogado.data.queryUsuario[0].id">Editar</button>
+                                <button id="btn5" class="btn w-100 text-start text-white" dmx-on:click="run([{run:{outputType:'text',action:`data_tarefas.select(id)`}},{wait:{delay:200}},{run:{outputType:'text',action:`apiListarMembrosTIme.load({times: data_projeto.data.times})`}},{wait:{delay:200}},{run:{outputType:'text',action:`editarModalTarefas.show()`}}])" data-bs-target="#editarModal" type="submit" dmx-show="_['criado-por']==usuarioLogado.data.queryUsuario[0].id">Editar</button>
                                 <button id="btn5" class="btn w-100 text-start text-white" data-bs-target="#editarModal" type="submit" dmx-on:click="run([{run:{name:'tarefa',outputType:'text',action:`data_tarefas.select(id)`}},{wait:{delay:600}},{run:{name:'listagem',outputType:'text',action:`apiListarAtividades.load({idatividades: data_tarefas.data.id, idterafa: data_tarefas.data.id})`}}])">Atividades</button>
                             </div>
                         </div>

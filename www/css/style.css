@@ -1,9 +1,9 @@
-html, body {
+/*html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden; /* Impede o scroll vertical */
-}
+  overflow: hidden;
+}*/
 body {  
   /*background: radial-gradient(circle at center top, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.8) 40%, rgba(201, 209, 217, 0.8) 100%);*/
   background-color: #0F1014; /* Cor de fundo */
@@ -21,13 +21,6 @@ body {
 .bg-drop{
     background-color: #1C1D22;
 }
-.form-control, .form-select{
-    height: 46px;
-    background-color: #1b1c22;
-    color: #fff;
-    border: none;
-}
-
 .form-label{
     font-weight: 500;
 }
@@ -135,28 +128,6 @@ border: none;
 .form-check-input{
     color: orangered;
 }
-
-/* Aplica a cor para todos os placeholders em elementos de formulário */
-.form-control::-webkit-input-placeholder {
-    color: #888888 !important; /* Define a cor desejada */
-    opacity: 1; /* Garante visibilidade total */
-}
-.form-control::-moz-placeholder {
-    color: #888888 !important; /* Define a cor desejada */
-    opacity: 1; /* Garante visibilidade total */
-}
-.form-control:-ms-input-placeholder {
-    color: #888888 !important; /* Define a cor desejada */
-    opacity: 1; /* Garante visibilidade total */
-}
-.form-control::-ms-input-placeholder {
-    color: #888888 !important; /* Define a cor desejada */
-    opacity: 1; /* Garante visibilidade total */
-}
-.form-control::placeholder {
-    color: #888888 !important; /* Define a cor desejada */
-    opacity: 1; /* Garante visibilidade total */
-}
 .item-nota{
     background-color: #0d6dfd17;
     border-radius: 6px;
@@ -171,4 +142,39 @@ border: none;
     background-color: #70e0001d;
     border-radius: 6px;
     border: solid 1px #70e000;
+}
+.form-control, .form-select {
+    height: 46px;
+    background-color: #1b1c22 !important; /* Cor de fundo escura fixa */
+    color: #fff;
+    border: none;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: #1b1c22 !important; /* Cor de fundo no foco */
+    color: #fff;
+    outline: none; /* Remove a borda de destaque padrão */
+}
+
+/* Mantém a cor do placeholder em todos os estados */
+.form-control::-webkit-input-placeholder, .form-control:focus::-webkit-input-placeholder {
+    color: #888888 !important; /* Cor do placeholder */
+    opacity: 1;
+}
+.form-control::-moz-placeholder, .form-control:focus::-moz-placeholder {
+    color: #888888 !important; /* Cor do placeholder */
+    opacity: 1;
+}
+.form-control:-ms-input-placeholder, .form-control:focus:-ms-input-placeholder {
+    color: #888888 !important; /* Cor do placeholder */
+    opacity: 1;
+}
+.form-control::-ms-input-placeholder, .form-control:focus::-ms-input-placeholder {
+    color: #888888 !important; /* Cor do placeholder */
+    opacity: 1;
+}
+.form-control::placeholder,
+.form-control:focus::placeholder {
+    color: #888888 !important; /* Cor do placeholder */
+    opacity: 1;
 }
