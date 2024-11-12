@@ -296,13 +296,13 @@
     </div>
 </div>
 <main>
-    <div class="d-flex justify-content-between align-items-center mb-3" dmx-show="view1.projeto.value==0">
+    <div class="d-flex justify-content-between align-items-center mb-3">
         <div class="d-flex">
             <h4 class=" m-0">Projetos<small class="sub-title">Gestão de projetos e tarefas</small>
             </h4>
         </div><button id="btn7" class="btn py-2 btn-primary" data-bs-toggle="modal" data-bs-target="#criarModalProjeto">Criar novo</button>
     </div>
-    <div class="container-fluid px-0" dmx-show="view1.projeto.value==0">
+    <div class="container-fluid px-0">
         <div class="row px-1" id="rpProjetos" is="dmx-repeat" dmx-bind:repeat="apiListarProjetos.data.queryListarProjetos" key="id">
             <div class=" col-4 px-2 pb-3">
                 <div class="row p-0 m-0">
@@ -322,7 +322,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid bg-container px-4 pt-4 rounded-3 border border-dark mb-4" dmx-show="view1.projeto.value==1">
+    <div class="container-fluid bg-container px-4 pt-4 rounded-3 border border-dark mb-4">
         <div class="row">
             <div class="col-8">
                 <div class="d-flex mb-3">
@@ -346,7 +346,7 @@
         </div>
     </div>
 
-    <div class="d-flex flex-row justify-content-between align-items-center mb-4" dmx-show="view1.projeto.value==1">
+    <div class="d-flex flex-row justify-content-between align-items-center mb-4">
         <div class="d-flex align-items-center">
             <h5 class="m-0">Tarefas do projeto</h5>
         </div>
@@ -355,7 +355,7 @@
             <a><img src="assets/duotune/general/gen010.svg" height="24" class="icon" dmx-on:click="tarefas.setValue(2)"></a>
         </div>
     </div>
-    <div class="container-fluid" dmx-show="view1.tarefas.value==1">
+    <div class="container-fluid">
 
 
         <div class="row " is="dmx-repeat" id="rpKanban" dmx-bind:repeat="apiListarKanbanTarefas.data.repeat" key="id">
@@ -389,7 +389,7 @@
                                     <option value="2">Em Andamento</option>
                                     <option value="3">Cancelado</option>
                                     <option value="4">Concluído</option>
-                                </select><img src="assets/duotune/general/gen021.svg" class="icon cursor" dmx-on:click="run({run:{outputType:'text',action:`data_tarefas.select(id)`}})" height="56" width="56">
+                                </select><img src="assets/duotune/general/gen021.svg" class="icon cursor" dmx-on:click="run([{run:{name:'selecionarTarefa',outputType:'text',action:`data_tarefas.select(id);projeto.setValue(5);tarefas.setValue(0);detalhes.setValue(1)`}},{wait:{delay:200}},{run:{name:'listarAtividades',outputType:'text',action:`apiListarAtividades.load({idterafa: id})`}}])" height="56" width="56">
 
                             </div>
                         </div>
@@ -398,7 +398,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid bg-container p-4 rounded-3 mb-3 border border-dark" dmx-show="view1.tarefas.value==2">
+    <div class="container-fluid bg-container p-4 rounded-3 mb-3 border border-dark">
         <div class="row pb-3 gx-0 align-items-center border-bottom mx-0 ps-0 border-dark">
             <div class="col-6 align-self-center">
                 <h6 class="p-1 m-0 txt-tab-title">TAREFA</h6>
@@ -430,7 +430,7 @@
                             <button id="editar1" class="btn dropdown-toggle btn-sm txt-tab-button btn-dark" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ações</button>
                             <div class="dropdown-menu bg-drop" aria-labelledby="dropdown1">
                                 <button id="btn5" class="btn w-100 text-start text-white" dmx-on:click="run([{run:{outputType:'text',action:`data_tarefas.select(id)`}},{wait:{delay:200}},{run:{outputType:'text',action:`apiListarMembrosTIme.load({times: data_projeto.data.times})`}},{wait:{delay:200}},{run:{outputType:'text',action:`editarModalTarefas.show()`}}])" data-bs-target="#editarModal" type="submit" dmx-show="_['criado-por']==usuarioLogado.data.queryUsuario[0].id">Editar</button>
-                                <button id="btn5" class="btn w-100 text-start text-white" data-bs-target="#editarModal" type="submit" dmx-on:click="run({run:{name:'tarefa',outputType:'text',action:`data_tarefas.select(id)`}})">Atividades</button>
+                                <button id="btn5" class="btn w-100 text-start text-white" data-bs-target="#editarModal" type="submit" dmx-on:click="run([{run:{name:'tarefa',outputType:'text',action:`data_tarefas.select(id);projeto.setValue(2);tarefas.setValue(0);detalhes.setValue(1)`}},{wait:{delay:200}},{run:{name:'listarAtividades',outputType:'text',action:`apiListarAtividades.load({idterafa: data_tarefas.data.id})`}}])">Atividades</button>
                             </div>
                         </div>
                     </div>
@@ -438,22 +438,21 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid bg-container px-4 pt-4 rounded-3 border border-dark mb-4" dmx-show="view1.projeto.value==1">
+    <div class="container-fluid bg-container p-4 rounded-3 border border-dark mb-4">
         <div class="row">
             <div class="col-8">
                 <div class="d-flex mb-3">
-                    <p class="btn-txt-min text-start m-0">{{view1.data_projeto.data.nome}}</p>
+                    <p class="btn-txt-min text-start m-0">{{view1.data_projeto.data['nome-projeto']}}</p>
                 </div>
                 <h5>{{view1.data_tarefas.data.titulo}}</h5>
                 <p>{{view1.data_tarefas.data['descricao-tarefa']}}</p>
             </div>
             <div class="col text-end align-self-center">
-                <button id="btn6" class="btn py-2 btn-sm btn-primary me-3" data-bs-toggle="modal" data-bs-target="#criarModalTarefas" dmx-on:click="apiListarMembrosTIme.load({times: data_projeto.data.times})">Criar tarefas</button>
-                <button id="btn6" class="btn py-2 btn-sm btn-light" dmx-on:click="data_atividades.select(0);data_tarefas.select(0);data_projeto.select(0);reuniao.setValue(0);detalhes.setValue(0);tarefas.setValue(0);projeto.setValue(0)">Voltar</button>
+                <button id="btn6" class="btn py-2 btn-sm btn-light" dmx-on:click="projeto.setValue(1);detalhes.setValue(0);tarefas.setValue(1)">Voltar</button>
             </div>
         </div>
     </div>
-    <div class="container-fluid bg-container p-4 rounded-3 border border-dark mb-3" dmx-show="view1.detalhes.value==1">
+    <div class="container-fluid bg-container p-4 rounded-3 border border-dark mb-3">
         <div class="row">
             <div class="col">
                 <div class="d-flex justify-content-between pb-3 align-items-center">
