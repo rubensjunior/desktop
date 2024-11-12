@@ -206,10 +206,10 @@
                 <form method="post" id="editarFormTarefa" is="dmx-serverconnect-form" action="http://localhost:8100/api/desktop/tarefas/atualizar-tarefas" site="sfapis" dmx-on:error="editarFormTarefa.reset();data_tarefas.select(0);editarModalTarefas.hide();alertas.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response)" dmx-on:success="run([{run:{outputType:'text',action:`editarFormTarefa.reset()`}},{run:{outputType:'text',action:`data_tarefas.select(0)`}},{run:{outputType:'text',action:`apiListarTarefas.load({idprojeto: data_projeto.data.id})`}},{wait:{delay:200}},{run:{outputType:'text',action:`apiListarKanbanTarefas.load({idprojeto: data_projeto.data.id})`}},{run:{outputType:'text',action:`editarModalTarefas.hide()`}},{run:{outputType:'text',action:`alertas.info(\'Tarefa atualizada com sucesso!\')`}}])">
 
                     <div class="form-group">
-                        <input class="form-control" id="statusedit" name="statusedit" aria-describedby="input1_help" dmx-bind:value="selectStatusedit.selectedValue">
-                        <input class="form-control" id="responsaveledit" name="responsaveledit" aria-describedby="input1_help" dmx-bind:value="data_tarefas.data.responsavel">
-                        <input class="form-control" id="textostatusedit" name="textostatusedit" aria-describedby="input1_help" dmx-bind:value="selectStatusedit.selectedText">
-                        <input class="form-control" id="idtarefaedit" name="idtarefaedit" aria-describedby="input1_help" dmx-bind:value="data_tarefas.data.id">
+                        <input class="form-control" id="statusedit" name="statusedit" aria-describedby="input1_help" dmx-bind:value="selectStatusedit.selectedValue" type="hidden">
+                        <input class="form-control" id="responsaveledit" name="responsaveledit" aria-describedby="input1_help" dmx-bind:value="data_tarefas.data.responsavel" type="hidden">
+                        <input class="form-control" id="textostatusedit" name="textostatusedit" aria-describedby="input1_help" dmx-bind:value="selectStatusedit.selectedText" type="hidden">
+                        <input class="form-control" id="idtarefaedit" name="idtarefaedit" aria-describedby="input1_help" dmx-bind:value="data_tarefas.data.id" type="hidden">
                     </div>
                     <div class="form-group mb-3">
                         <input type="text" class="form-control" id="titulotarefaedit" name="titulotarefaedit" aria-describedby="input1_help" placeholder="Nome da tarefa" dmx-bind:value="data_tarefas.data.titulo" required="" data-msg-required="Campo obrigatório.">
@@ -324,7 +324,7 @@
     </div>
     <div class="container-fluid bg-container px-4 pt-4 rounded-3 border border-dark mb-4" dmx-show="view1.projeto.value==1">
         <div class="row">
-            <div class="col">
+            <div class="col-8">
                 <div class="d-flex mb-3">
                     <p class="btn-txt-min text-start m-0">{{view1.data_projeto.data.nome}}</p>
                 </div>
@@ -332,7 +332,8 @@
                 <p>{{view1.data_projeto.data['descricao-projeto']}}</p>
             </div>
             <div class="col text-end align-self-center">
-                <button id="btn2" class="btn py-2 btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#criarModalTarefas" dmx-on:click="apiListarMembrosTIme.load({times: data_projeto.data.times})">Criar tarefas</button>
+                <button id="btn2" class="btn py-2 btn-sm btn-primary me-3" data-bs-toggle="modal" data-bs-target="#criarModalTarefas" dmx-on:click="apiListarMembrosTIme.load({times: data_projeto.data.times})">Criar tarefas</button>
+                <button id="btn3" class="btn py-2 btn-sm btn-light" dmx-on:click="data_atividades.select(0);data_tarefas.select(0);data_projeto.select(0);reuniao.setValue(0);detalhes.setValue(0);tarefas.setValue(0);projeto.setValue(0)">Voltar</button>
             </div>
         </div>
         <div class="row mx-0 mt-2">
@@ -344,6 +345,7 @@
             </div>
         </div>
     </div>
+
     <div class="d-flex flex-row justify-content-between align-items-center mb-4" dmx-show="view1.projeto.value==1">
         <div class="d-flex align-items-center">
             <h5 class="m-0">Tarefas do projeto</h5>
@@ -375,17 +377,19 @@
                         <div class="col-12 bg-container p-4 rounded-3 border border-dark  mb-3">
                             <div class="d-flex flex-row justify-content-between mb-3">
                                 <p class="card-mini-title text-start m-0">Responsável</p>
-                                <img src="assets/duotune/general/gen055.svg" width="22" class="icon cursor" dmx-on:click="run([{run:{outputType:'text',action:`apiListarMembrosTIme.load({times: data_projeto.data.times})`}},{wait:{delay:200}},{run:{outputType:'text',action:`data_tarefas.select(id)`}},{wait:{delay:200}},{run:{outputType:'text',action:`criarModalTarefas.show()`}}])">
+                                <img src="assets/duotune/general/gen055.svg" width="22" class="icon cursor" dmx-on:click="run([{run:{outputType:'text',action:`data_tarefas.select(id)`}},{wait:{delay:200}},{run:{outputType:'text',action:`apiListarMembrosTIme.load({times: data_projeto.data.times})`}},{wait:{delay:200}},{run:{outputType:'text',action:`editarModalTarefas.show()`}}])">
+
                             </div>
                             <h5>{{titulo}}</h5>
-                            <p>{{_['descricao-tarefa']}}</p>
-                            <div class="d-flex border-top pt-3 border-dark w-100 flex-row justify-content-start">
+                            <p dmx-text="_['descricao-tarefa'].trunc(128, true, '...')" class="txt-card">Descricao</p>
+                            <p class="card-mini-date">Prazo: {{_['data-fim']}}</p>
+                            <div class="d-flex border-top pt-3 border-dark w-100 flex-row align-items-center justify-content-between">
                                 <select id="select1" class="btn dropdown-toggle btn-sm txt-tab-button btn-dark" dmx-bind:value="status" name="text-start" dmx-on:changed="run([{run:{outputType:'text',action:`apiAtializarStatusKanban.load({idtarefakanban: id, statusidtarefakanban: selectedValue, statustextotarefakanban: selectedText})`}},{wait:{delay:200}},{run:{outputType:'text',action:`apiListarKanbanTarefas.load({idprojeto: data_projeto.data.id})`}},{wait:{delay:200}},{run:{outputType:'text',action:`apiListarTarefas.load({idprojeto: data_projeto.data.id})`}}])">
                                     <option value="1">A Fazer</option>
                                     <option value="2">Em Andamento</option>
                                     <option value="3">Cancelado</option>
                                     <option value="4">Concluído</option>
-                                </select>
+                                </select><img src="assets/duotune/general/gen021.svg" class="icon cursor" dmx-on:click="run({run:{outputType:'text',action:`data_tarefas.select(id)`}})" height="56" width="56">
 
                             </div>
                         </div>
@@ -426,11 +430,26 @@
                             <button id="editar1" class="btn dropdown-toggle btn-sm txt-tab-button btn-dark" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ações</button>
                             <div class="dropdown-menu bg-drop" aria-labelledby="dropdown1">
                                 <button id="btn5" class="btn w-100 text-start text-white" dmx-on:click="run([{run:{outputType:'text',action:`data_tarefas.select(id)`}},{wait:{delay:200}},{run:{outputType:'text',action:`apiListarMembrosTIme.load({times: data_projeto.data.times})`}},{wait:{delay:200}},{run:{outputType:'text',action:`editarModalTarefas.show()`}}])" data-bs-target="#editarModal" type="submit" dmx-show="_['criado-por']==usuarioLogado.data.queryUsuario[0].id">Editar</button>
-                                <button id="btn5" class="btn w-100 text-start text-white" data-bs-target="#editarModal" type="submit" dmx-on:click="run([{run:{name:'tarefa',outputType:'text',action:`data_tarefas.select(id)`}},{wait:{delay:600}},{run:{name:'listagem',outputType:'text',action:`apiListarAtividades.load({idatividades: data_tarefas.data.id, idterafa: data_tarefas.data.id})`}}])">Atividades</button>
+                                <button id="btn5" class="btn w-100 text-start text-white" data-bs-target="#editarModal" type="submit" dmx-on:click="run({run:{name:'tarefa',outputType:'text',action:`data_tarefas.select(id)`}})">Atividades</button>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid bg-container px-4 pt-4 rounded-3 border border-dark mb-4" dmx-show="view1.projeto.value==1">
+        <div class="row">
+            <div class="col-8">
+                <div class="d-flex mb-3">
+                    <p class="btn-txt-min text-start m-0">{{view1.data_projeto.data.nome}}</p>
+                </div>
+                <h5>{{view1.data_tarefas.data.titulo}}</h5>
+                <p>{{view1.data_tarefas.data['descricao-tarefa']}}</p>
+            </div>
+            <div class="col text-end align-self-center">
+                <button id="btn6" class="btn py-2 btn-sm btn-primary me-3" data-bs-toggle="modal" data-bs-target="#criarModalTarefas" dmx-on:click="apiListarMembrosTIme.load({times: data_projeto.data.times})">Criar tarefas</button>
+                <button id="btn6" class="btn py-2 btn-sm btn-light" dmx-on:click="data_atividades.select(0);data_tarefas.select(0);data_projeto.select(0);reuniao.setValue(0);detalhes.setValue(0);tarefas.setValue(0);projeto.setValue(0)">Voltar</button>
             </div>
         </div>
     </div>
