@@ -8,7 +8,7 @@
 <dmx-value id="detalhes"></dmx-value>
 <dmx-value id="reuniao" dmx-bind:value="0"></dmx-value>
 <dmx-datetime id="dataAtual" interval="days"></dmx-datetime>
-<dmx-serverconnect id="apiAtializarStatusKanban" url="http://localhost:8100/api/desktop/tarefas/atualizar-status-kanban" site="sfapis"></dmx-serverconnect>
+<dmx-serverconnect id="apiAtializarStatusKanban" url="http://localhost:8100/api/desktop/tarefas/atualizar-status-kanban" site="sfapis" noload="true"></dmx-serverconnect>
 <dmx-serverconnect id="apiListarKanbanTarefas" noload="true" url="http://localhost:8100/api/desktop/tarefas/listar-kanban" site="sfapis"></dmx-serverconnect>
 <dmx-serverconnect id="apiListarReunioes" noload="true" url="http://localhost:8100/api/desktop/atividades/listar-reunioes" site="sfapis"></dmx-serverconnect>
 
@@ -263,15 +263,15 @@
                 <h5 class="modal-title">Criar nota</h5>
             </div>
             <div class="modal-body p-3 bg-container">
-                <form id="criarFormAtividade" is="dmx-serverconnect-form" method="post" action="http://localhost:8100/api/desktop/atividades/criar-atividade" site="sfapis" dmx-on:error="criarFormAtividade.reset();criarModalAtividade.hide();alertas.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response)" dmx-on:success="criarFormAtividade.reset();apiListarAtividades.load({id: data_tarefas.data.id});apiListarReunioes.load({idprojeto: data_projeto.data.id});criarModalAtividade.hide();alertas.success('Cadastro realizado com sucesso!')">
+                <form id="criarFormAtividade" is="dmx-serverconnect-form" method="post" action="http://localhost:8100/api/desktop/tarefas/atividades/criar-atividades" site="sfapis" dmx-on:error="criarFormAtividade.reset();criarModalAtividade.hide();alertas.danger('Ocorreu um erro: '+lastError.status+lastError.message+lastError.response)" dmx-on:success="run([{run:{name:'listarAtividades',outputType:'text',action:`apiListarAtividades.load({idterafa: data_tarefas.data.id})`}},{wait:{delay:200}},{run:{name:'limpeza',outputType:'text',action:`criarFormAtividade.reset();criarModalAtividade.hide();alertas.success(\'Atividade criada com sucesso!\')`}}])">
                     <div class="form-group">
                         <input type="hidden" class="form-control" id="atvprojeto" name="atvprojeto" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="data_tarefas.data.projeto">
                         <input type="hidden" class="form-control" id="atvtarefa" name="atvtarefa" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="data_tarefas.data.id">
                         <input type="hidden" class="form-control" id="atvcriadopor" name="atvcriadopor" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="usuarioLogado.data.queryUsuario[0].id">
-                        <input type="hidden" class="form-control" id="atvtipo" name="atvtipo" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="selectTipoNota.selectedValue">
+                        <input type="hidden" class="form-control" id="selectTipoNota" name="selectTipoNota" aria-describedby="input1_help" placeholder="Enter some text" dmx-bind:value="atvtipo.selectedValue">
                     </div>
                     <div class="form-group mb-3">
-                        <select id="selectTipoNota" class="form-select" required="" data-msg-required="Este é um campo obrigatório." dmx-bind:options="apiListarTiposAtividades.data.queryTipo" optiontext="tipo" optionvalue="id">
+                        <select id="atvtipo" class="form-select" required="" data-msg-required="Este é um campo obrigatório." dmx-bind:options="apiListarTiposAtividades.data.queryTipo" optiontext="tipo" optionvalue="id" name="atvtipo">
                             <option selected="" value="null" disabled>Selecione o tipo de nota</option>
                         </select>
                     </div>
@@ -280,11 +280,23 @@
                     <div class="form-group mb-3">
                         <textarea id="atvdescricao" class="form-control text-area" placeholder="Insira o comentário da nota." required="" data-msg-required="Este é um campo obrigatório." name="atvdescricao"></textarea>
                     </div>
-                    <div class="form-group mb-3" dmx-show="selectTipoNota.selectedValue==2">
+                    <div class="form-group mb-3" dmx-show="atvtipo.selectedValue==2">
+
                         <input type="text" class="form-control" id="atvlink" name="atvlink" aria-describedby="input1_help" placeholder="Link do documento">
                     </div>
-                    <div class="form-group" dmx-show="selectTipoNota.selectedValue==3">
-                        <input id="atvdata" name="atvdata" type="datetime-local" class="form-control" dmx-bind:value="dataAtual.datetime.formatDate('yyyy-MM-01 HH:mm') ">
+                    <div class="form-group" dmx-show="atvtipo.selectedValue==3">
+                        <div class="row">
+                            <div class="col-6">
+                                <legend class="col-form-label p-0">Início</legend>
+                                <input id="atvdata" name="atvdata" type="datetime-local" class="form-control" dmx-bind:value="dataAtual.datetime.formatDate('yyyy-MM-01 HH:mm') ">
+                            </div>
+                            <div class="col-6">
+                                <legend class="col-form-label p-0">Fim</legend>
+                                <input id="atvdatafim" name="atvdatafim" type="datetime-local" class="form-control" dmx-bind:value="dataAtual.datetime.formatDate('yyyy-MM-01 HH:mm') ">
+                            </div>
+                        </div>
+
+
                     </div>
                 </form>
             </div>
@@ -303,10 +315,10 @@
         </div><button id="btn7" class="btn py-2 btn-primary" data-bs-toggle="modal" data-bs-target="#criarModalProjeto">Criar novo</button>
     </div>
     <div class="container-fluid px-0">
-        <div class="row px-1" id="rpProjetos" is="dmx-repeat" dmx-bind:repeat="apiListarProjetos.data.queryListarProjetos" key="id">
+        <div class="row px-1 align-items-stretch" id="rpProjetos" is="dmx-repeat" dmx-bind:repeat="apiListarProjetos.data.queryListarProjetos" key="id">
             <div class=" col-4 px-2 pb-3">
                 <div class="row p-0 m-0">
-                    <div class="col bg-container p-4 rounded-3 border border-dark">
+                    <div class="col bg-container p-4 rounded-3 border border-dark align-self-stretch">
                         <div class="d-flex flex-row justify-content-between mb-3">
                             <p class="btn-txt-min text-start m-0">{{nome}}</p>
                             <img src="assets/duotune/general/gen055.svg" width="22" class="icon cursor" dmx-on:click="run([{run:{outputType:'text',action:`data_projeto.select(id)`}},{wait:{delay:200}},{run:{outputType:'text',action:`apiListarMembrosTIme.load({times: times})`}},{run:{outputType:'text',action:`editarModalProjeto.show()`}}])">
@@ -389,7 +401,7 @@
                                     <option value="2">Em Andamento</option>
                                     <option value="3">Cancelado</option>
                                     <option value="4">Concluído</option>
-                                </select><img src="assets/duotune/general/gen021.svg" class="icon cursor" dmx-on:click="run([{run:{name:'selecionarTarefa',outputType:'text',action:`data_tarefas.select(id);projeto.setValue(5);tarefas.setValue(0);detalhes.setValue(1)`}},{wait:{delay:200}},{run:{name:'listarAtividades',outputType:'text',action:`apiListarAtividades.load({idterafa: id})`}}])" height="56" width="56">
+                                </select><img src="assets/duotune/general/gen021.svg" class="icon-2 cursor" dmx-on:click="run([{run:{name:'selecionarTarefa',outputType:'text',action:`data_tarefas.select(id);projeto.setValue(5);tarefas.setValue(0);detalhes.setValue(1)`}},{wait:{delay:200}},{run:{name:'listarAtividades',outputType:'text',action:`apiListarAtividades.load({idterafa: id})`}}])" width="8">
 
                             </div>
                         </div>
@@ -433,6 +445,7 @@
                                 <button id="btn5" class="btn w-100 text-start text-white" data-bs-target="#editarModal" type="submit" dmx-on:click="run([{run:{name:'tarefa',outputType:'text',action:`data_tarefas.select(id);projeto.setValue(2);tarefas.setValue(0);detalhes.setValue(1)`}},{wait:{delay:200}},{run:{name:'listarAtividades',outputType:'text',action:`apiListarAtividades.load({idterafa: data_tarefas.data.id})`}}])">Atividades</button>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -455,21 +468,35 @@
     <div class="container-fluid bg-container p-4 rounded-3 border border-dark mb-3">
         <div class="row">
             <div class="col">
-                <div class="d-flex justify-content-between pb-3 align-items-center">
+                <div class="d-flex justify-content-between pb-3 align-items-center border-bottom border-dark">
                     <h6 class="m-0">Detalhe tarefa: {{view1.data_tarefas.data.titulo}}</h6>
                     <button id="btn4" class="btn py-2 btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#criarModalAtividade">Adicionar nota</button>
                 </div>
                 <div class="row m-0">
                     <div class="col">
                         <div class="row" is="dmx-repeat" id="rpNotasAtividades" dmx-bind:repeat="apiListarAtividades.data.queryAtividades" key="id">
-                            <div class="col-12 align-self-center py-3 item-nota mb-2" dmx-show="tipo==1">
-                                <p class="m-0">{{_['descricao-atividade']}}</p>
-                            </div>
-                            <div class="col-12 align-self-center py-3 item-documento mb-2" dmx-show="tipo==2">
-                                <p class="m-0">{{_['descricao-atividade']}}</p>
-                            </div>
-                            <div class="col-12 align-self-center py-3 item-reuniao mb-2" dmx-show="tipo==3">
-                                <p class="m-0">{{_['descricao-atividade']}}</p>
+                            <div class="col-12 py-3 align-items-center border-bottom border-dark">
+                                <div class="row">
+                                    <div class="col-1">
+                                        <img width="32" height="32" src="assets/duotune/general/gen005.svg" class="icon-3" dmx-show="tipo==1"><img width="32" height="32" src="assets/duotune/files/fil012.svg" class="icon-3" dmx-show="tipo==2"><img width="32" height="32" src="assets/duotune/general/gen014.svg" class="icon-3" dmx-show="tipo==3">
+
+
+                                    </div>
+                                    <div class="col align-self-center">
+                                        <p class="m-0">{{_['descricao-atividade']}}</p>
+                                    </div>
+                                    <div class="col-1 text-end align-self-center">
+                                        <div class="dropdown">
+                                            <button id="editar2" class="btn dropdown-toggle btn-sm txt-tab-button btn-dark" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ações</button>
+                                            <div class="dropdown-menu bg-drop" aria-labelledby="dropdown1">
+                                                <button id="btn8" class="btn w-100 text-start text-white" dmx-on:click="run([{run:{outputType:'text',action:`data_tarefas.select(id)`}},{wait:{delay:200}},{run:{outputType:'text',action:`apiListarMembrosTIme.load({times: data_projeto.data.times})`}},{wait:{delay:200}},{run:{outputType:'text',action:`editarModalTarefas.show()`}}])" data-bs-target="#editarModal" type="submit" dmx-show="_['criado-por']==usuarioLogado.data.queryUsuario[0].id">Editar</button>
+                                                <button id="btn8" class="btn w-100 text-start text-white" data-bs-target="#editarModal" type="submit" dmx-on:click="run([{run:{name:'tarefa',outputType:'text',action:`data_tarefas.select(id);projeto.setValue(2);tarefas.setValue(0);detalhes.setValue(1)`}},{wait:{delay:200}},{run:{name:'listarAtividades',outputType:'text',action:`apiListarAtividades.load({idterafa: data_tarefas.data.id})`}}])">Concluir</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -478,7 +505,7 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid bg-container p-4 rounded-3 border border-dark mb-4" dmx-show="view1.reuniao.value==1">
+    <div class="container-fluid bg-container p-4 rounded-3 border border-dark mb-4">
         <div class="row">
             <div class="col">
                 <div class="d-flex justify-content-between pb-3 border-bottom align-items-center mb-3 border-dark">
@@ -486,6 +513,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
+                        <dmx-calendar id="reuniaoCalendario" views="dayGridMonth,dayGridWeek,dayGridDay" theme="bootstrap5"></dmx-calendar>
                     </div>
                 </div>
 

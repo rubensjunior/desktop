@@ -56,6 +56,14 @@ body {
     height: 18px;
     width: 18px;
 }
+.icon-2{
+    opacity: 0.65;
+    height: 24px;
+    width: 24px;
+}
+.icon-3{
+    opacity: 0.65;
+}
 .btn{
     font-weight: 500;
 }
