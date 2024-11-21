@@ -908,6 +908,145 @@ dmx.config({
         }
       ],
       "outputType": "array"
+    },
+    "data_reuniao": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "number",
+          "name": "projeto"
+        },
+        {
+          "type": "number",
+          "name": "tarefa"
+        },
+        {
+          "type": "text",
+          "name": "descricao-atividade"
+        },
+        {
+          "type": "date",
+          "name": "criadoem"
+        },
+        {
+          "type": "number",
+          "name": "criadopor"
+        },
+        {
+          "type": "number",
+          "name": "tipo"
+        },
+        {
+          "type": "text",
+          "name": "link"
+        },
+        {
+          "type": "date",
+          "name": "data-reuniao"
+        },
+        {
+          "type": "date",
+          "name": "data-fim-reuniao"
+        }
+      ],
+      "outputType": "array"
+    },
+    "detalhesreuniao": {
+      "meta": null,
+      "outputType": "text"
+    },
+    "prReunioes": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "number",
+          "name": "projeto"
+        },
+        {
+          "type": "number",
+          "name": "tarefa"
+        },
+        {
+          "type": "text",
+          "name": "descricao-atividade"
+        },
+        {
+          "type": "date",
+          "name": "criadoem"
+        },
+        {
+          "type": "number",
+          "name": "criadopor"
+        },
+        {
+          "type": "number",
+          "name": "tipo"
+        },
+        {
+          "type": "text",
+          "name": "link"
+        },
+        {
+          "type": "date",
+          "name": "data-reuniao"
+        },
+        {
+          "type": "date",
+          "name": "data-fim-reuniao"
+        }
+      ],
+      "outputType": "array"
+    },
+    "rpReunioes": {
+      "meta": [
+        {
+          "type": "number",
+          "name": "id"
+        },
+        {
+          "type": "number",
+          "name": "projeto"
+        },
+        {
+          "type": "number",
+          "name": "tarefa"
+        },
+        {
+          "type": "text",
+          "name": "descricao-atividade"
+        },
+        {
+          "type": "date",
+          "name": "criadoem"
+        },
+        {
+          "type": "number",
+          "name": "criadopor"
+        },
+        {
+          "type": "number",
+          "name": "tipo"
+        },
+        {
+          "type": "text",
+          "name": "link"
+        },
+        {
+          "type": "date",
+          "name": "data-reuniao"
+        },
+        {
+          "type": "date",
+          "name": "data-fim-reuniao"
+        }
+      ],
+      "outputType": "array"
     }
   }
 });
